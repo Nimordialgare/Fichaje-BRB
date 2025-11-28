@@ -430,7 +430,8 @@
         };
 
         state.obras.push(nuevaObra);
-        renderObras();
+        docRef.set({ obras: state.obras });
+
 
         tituloInput.value = "";
         lugarInput.value = "";
@@ -514,7 +515,7 @@
           if (!seguro) return;
 
           state.obras = state.obras.filter((o) => o.id !== obra.id);
-          renderObras();
+          docRef.set({ obras: state.obras });
         });
 
         const rightSide = document.createElement("div");
@@ -749,6 +750,8 @@
           trabajador.fichajes = [];
         }
         trabajador.fichajes.push(now);
+        docRef.set({ obras: state.obras });
+
 
         check.classList.add("visible");
         setTimeout(() => {
@@ -780,8 +783,9 @@
         );
         if (!seguro) return;
 
-        obra.trabajadores = obra.trabajadores.filter(
-          (t) => t.id !== trabajador.id
+        obra.trabajadores = obra.trabajadores.filter(t => t.id !== trabajador.id);
+        docRef.set({ obras: state.obras });
+
         );
         renderObras();
       });
@@ -855,8 +859,33 @@
     window.addEventListener("DOMContentLoaded", () => {
       setupAddObraForm();
       setupMap();
+
+      docRef.onSnapshot((doc) => {
+    const data = doc.data();
+    if (data && data.obras) {
+      state.obras = data.obras;
+    } else {
+      state.obras = [];
+    }
       renderObras();
     });
   </script>
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROJECT_ID.firebaseapp.com",
+    projectId: "TU_PROJECT_ID",
+  };
+
+  const appFB = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const docRef = db.collection("app").doc("data");
+</script>
+
 </body>
 </html>
+
