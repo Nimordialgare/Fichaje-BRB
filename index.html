@@ -12,9 +12,7 @@
   />
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -135,20 +133,9 @@
       gap: 0.3rem;
     }
 
-    button.primary {
-      background: #007aff;
-      color: #fff;
-    }
-
-    button.secondary {
-      background: #e5e5ea;
-      color: #222;
-    }
-
-    button.danger {
-      background: #ffebee;
-      color: #b71c1c;
-    }
+    button.primary { background: #007aff; color: #fff; }
+    button.secondary { background: #e5e5ea; color: #222; }
+    button.danger { background: #ffebee; color: #b71c1c; }
 
     button:disabled {
       opacity: 0.5;
@@ -177,9 +164,7 @@
       font-size: 0.8rem;
     }
 
-    .empresa-chip {
-      font-weight: 500;
-    }
+    .empresa-chip { font-weight: 500; }
 
     .workers-list {
       margin-top: 0.5rem;
@@ -210,9 +195,7 @@
       font-size: 0.9rem;
     }
 
-    .worker-name {
-      font-weight: 500;
-    }
+    .worker-name { font-weight: 500; }
 
     .worker-dni {
       font-size: 0.8rem;
@@ -233,9 +216,7 @@
       color: #28a745;
     }
 
-    .check.visible {
-      opacity: 1;
-    }
+    .check.visible { opacity: 1; }
 
     .history {
       margin-top: 0.3rem;
@@ -246,18 +227,14 @@
       display: none;
     }
 
-    .history.visible {
-      display: block;
-    }
+    .history.visible { display: block; }
 
     .history ul {
       padding-left: 1.2rem;
       margin: 0.3rem 0 0;
     }
 
-    .history li {
-      margin-bottom: 0.15rem;
-    }
+    .history li { margin-bottom: 0.15rem; }
 
     .empty-text {
       font-size: 0.85rem;
@@ -269,9 +246,7 @@
       display: none;
     }
 
-    .obra-details.visible {
-      display: block;
-    }
+    .obra-details.visible { display: block; }
 
     #obraMap {
       height: 260px;
@@ -340,15 +315,32 @@
   </div>
 
   <!-- Leaflet JS para el mapa -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    crossorigin=""
-  ></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    const state = {
-      obras: []
+    // 🔥 1) CONFIGURAR FIREBASE
+    // Sustituye este bloque por el que te da Firebase en "Configurar app web"
+    const firebaseConfig = {
+  apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
+  authDomain: "fichaje-brb-c9385.firebaseapp.com",
+  projectId: "fichaje-brb-c9385",
+  storageBucket: "fichaje-brb-c9385.firebasestorage.app",
+  messagingSenderId: "695373590746",
+  appId: "1:695373590746:web:8dd206b125b3119c7cf5e3"
     };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const docRef = db.collection("app").doc("data"); // UN SOLO DOCUMENTO PARA TODO
+  </script>
+
+  <script>
+    // 🔧 ESTADO EN MEMORIA
+    const state = { obras: [] };
 
     const obraColors = [
       "#FFE4E6",
@@ -365,6 +357,14 @@
 
     function createId() {
       return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    // Guarda el estado completo en Firestore (UN SOLO DOCUMENTO)
+    function saveToCloud() {
+      return docRef.set({ obras: state.obras }).catch((err) => {
+        console.error("Error guardando en Firestore:", err);
+        alert("Error guardando datos en la nube. Revisa la consola.");
+      });
     }
 
     function setupMap() {
@@ -405,7 +405,7 @@
       const errorMsg = document.getElementById("obraError");
       const coordsText = document.getElementById("obraCoordsText");
 
-      addButton.addEventListener("click", () => {
+      addButton.addEventListener("click", async () => {
         const titulo = tituloInput.value.trim();
         const lugar = lugarInput.value.trim();
         const tipo = tipoSelect.value;
@@ -430,8 +430,7 @@
         };
 
         state.obras.push(nuevaObra);
-        docRef.set({ obras: state.obras });
-
+        await saveToCloud(); // onSnapshot se encargará de llamar a renderObras()
 
         tituloInput.value = "";
         lugarInput.value = "";
@@ -508,14 +507,14 @@
         deleteObraBtn.className = "secondary danger";
         deleteObraBtn.textContent = "Eliminar obra";
 
-        deleteObraBtn.addEventListener("click", () => {
+        deleteObraBtn.addEventListener("click", async () => {
           const seguro = confirm(
             "¿Seguro que quieres eliminar esta obra y todos sus trabajadores y fichajes?"
           );
           if (!seguro) return;
 
           state.obras = state.obras.filter((o) => o.id !== obra.id);
-          docRef.set({ obras: state.obras });
+          await saveToCloud();
         });
 
         const rightSide = document.createElement("div");
@@ -606,7 +605,7 @@
 
         card.appendChild(details);
 
-        addTrabBtn.addEventListener("click", () => {
+        addTrabBtn.addEventListener("click", async () => {
           const nombre = nombreInput.value.trim();
           const apellidos = apellidosInput.value.trim();
           const dni = dniInput.value.trim();
@@ -631,22 +630,18 @@
           }
 
           obra.trabajadores.push(nuevoTrab);
+          await saveToCloud();
 
-          const workerEl = createWorkerElement(obra, nuevoTrab);
-          workersContainer.appendChild(workerEl);
-
-          nombreInput.value = "";
-          apellidosInput.value = "";
-          dniInput.value = "";
+          // el onSnapshot redibujará todo
         });
 
-        titleBox.addEventListener("click", () => {
+        titleBox.addEventListener("click", async () => {
           const wasExpanded = !!obra.expanded;
           state.obras.forEach((o) => {
             o.expanded = false;
           });
           obra.expanded = !wasExpanded;
-          renderObras();
+          await saveToCloud();
         });
 
         container.appendChild(card);
@@ -744,14 +739,14 @@
 
       renderHistory();
 
-      ficharBtn.addEventListener("click", () => {
+      ficharBtn.addEventListener("click", async () => {
         const now = Date.now();
         if (!Array.isArray(trabajador.fichajes)) {
           trabajador.fichajes = [];
         }
         trabajador.fichajes.push(now);
-        docRef.set({ obras: state.obras });
 
+        await saveToCloud();
 
         check.classList.add("visible");
         setTimeout(() => {
@@ -773,7 +768,7 @@
         }
       });
 
-      deleteWorkerBtn.addEventListener("click", () => {
+      deleteWorkerBtn.addEventListener("click", async () => {
         const seguro = confirm(
           "¿Eliminar al trabajador " +
             trabajador.nombre +
@@ -783,11 +778,10 @@
         );
         if (!seguro) return;
 
-        obra.trabajadores = obra.trabajadores.filter(t => t.id !== trabajador.id);
-        docRef.set({ obras: state.obras });
-
+        obra.trabajadores = obra.trabajadores.filter(
+          (t) => t.id !== trabajador.id
         );
-        renderObras();
+        await saveToCloud();
       });
 
       exportBtn.addEventListener("click", () => {
@@ -856,36 +850,31 @@
       return workerItem;
     }
 
+    // 🔁 Suscripción en tiempo real a Firestore
+    function subscribeToCloud() {
+      docRef.onSnapshot(
+        (doc) => {
+          if (!doc.exists) {
+            // si no existe, lo creamos vacío
+            docRef.set({ obras: [] });
+            return;
+          }
+          const data = doc.data() || {};
+          state.obras = Array.isArray(data.obras) ? data.obras : [];
+          renderObras();
+        },
+        (err) => {
+          console.error("Error escuchando Firestore:", err);
+          alert("Error conectando con la base de datos. Revisa la consola.");
+        }
+      );
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
       setupAddObraForm();
       setupMap();
-
-      docRef.onSnapshot((doc) => {
-    const data = doc.data();
-    if (data && data.obras) {
-      state.obras = data.obras;
-    } else {
-      state.obras = [];
-    }
-      renderObras();
+      subscribeToCloud();
     });
   </script>
-  <!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROJECT_ID.firebaseapp.com",
-    projectId: "TU_PROJECT_ID",
-  };
-
-  const appFB = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  const docRef = db.collection("app").doc("data");
-</script>
-
 </body>
 </html>
-
