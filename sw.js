@@ -12,6 +12,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  // Dejamos pasar todo a la red si no está cacheado
   event.respondWith(
     caches.match(event.request).then((response) => response || fetch(event.request))
   );
