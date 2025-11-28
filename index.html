@@ -321,29 +321,31 @@
   <!-- Leaflet JS para el mapa -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <!-- Firebase (compat) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <!-- APP + FIREBASE en un script tipo módulo -->
+  <script type="module">
+    // Firebase modular desde CDN
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-  <script>
-    // 🔥 1) CONFIGURAR FIREBASE
-    // Sustituye este bloque por el que te da Firebase en "Configurar app web"
+    // 🔥 Config de TU proyecto
     const firebaseConfig = {
-  apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
-  authDomain: "fichaje-brb-c9385.firebaseapp.com",
-  projectId: "fichaje-brb-c9385",
-  storageBucket: "fichaje-brb-c9385.firebasestorage.app",
-  messagingSenderId: "695373590746",
-  appId: "1:695373590746:web:8dd206b125b3119c7cf5e3"
+      apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
+      authDomain: "fichaje-brb-c9385.firebaseapp.com",
+      projectId: "fichaje-brb-c9385",
+      storageBucket: "fichaje-brb-c9385.firebasestorage.app",
+      messagingSenderId: "695373590746",
+      appId: "1:695373590746:web:8dd206b125b3119c7cf5e3"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const docRef = db.collection("app").doc("data"); // UN SOLO DOCUMENTO PARA TODO
-  </script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const dataDocRef = doc(db, "app", "data"); // DOC ÚNICO
 
-  <script>
-    // 🔧 ESTADO EN MEMORIA
     const state = { obras: [] };
 
     const obraColors = [
@@ -363,12 +365,8 @@
       return Date.now().toString(36) + Math.random().toString(36).slice(2);
     }
 
-    // Guarda el estado completo en Firestore (UN SOLO DOCUMENTO)
-    function saveToCloud() {
-      return docRef.set({ obras: state.obras }).catch((err) => {
-        console.error("Error guardando en Firestore:", err);
-        alert("Error guardando datos en la nube. Revisa la consola.");
-      });
+    async function saveToCloud() {
+      await setDoc(dataDocRef, { obras: state.obras });
     }
 
     function setupMap() {
@@ -434,7 +432,7 @@
         };
 
         state.obras.push(nuevaObra);
-        await saveToCloud(); // onSnapshot se encargará de llamar a renderObras()
+        await saveToCloud();
 
         tituloInput.value = "";
         lugarInput.value = "";
@@ -635,8 +633,6 @@
 
           obra.trabajadores.push(nuevoTrab);
           await saveToCloud();
-
-          // el onSnapshot redibujará todo
         });
 
         titleBox.addEventListener("click", async () => {
@@ -854,22 +850,21 @@
       return workerItem;
     }
 
-    // 🔁 Suscripción en tiempo real a Firestore
     function subscribeToCloud() {
-      docRef.onSnapshot(
-        (doc) => {
-          if (!doc.exists) {
-            // si no existe, lo creamos vacío
-            docRef.set({ obras: [] });
+      onSnapshot(
+        dataDocRef,
+        async (snap) => {
+          if (!snap.exists()) {
+            await setDoc(dataDocRef, { obras: [] });
             return;
           }
-          const data = doc.data() || {};
+          const data = snap.data() || {};
           state.obras = Array.isArray(data.obras) ? data.obras : [];
           renderObras();
         },
         (err) => {
           console.error("Error escuchando Firestore:", err);
-          alert("Error conectando con la base de datos. Revisa la consola.");
+          alert("Error escuchando datos de la nube: " + err.message);
         }
       );
     }
@@ -878,17 +873,19 @@
       setupAddObraForm();
       setupMap();
       subscribeToCloud();
-
-      <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("./sw.js")
-        .then(() => console.log("Service Worker registrado"))
-        .catch((err) => console.error("Error registrando Service Worker", err)); 
     });
+  </script>
+
+  <!-- Registro del Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("./sw.js")
+          .then(() => console.log("Service Worker registrado"))
+          .catch((err) => console.error("Error registrando Service Worker", err));
+      });
+    }
   </script>
 </body>
 </html>
-
-
