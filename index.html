@@ -135,21 +135,20 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.08s ease;
     }
 
+    /* Botones */
     button.primary {
       background: #007aff;
       color: #fff;
-      font-size: 1rem;           /* más grande */
-      padding: 0.6rem 1.4rem;    /* más grande */
+      padding: 0.6rem 1.2rem;   /* más grande */
+      font-size: 1rem;
+      font-weight: 500;
     }
 
-    /* Mientras se pulsa el botón de Fichar (activo) se ve verde */
-    button.primary:active {
-      background: #22c55e; /* verde */
-      transform: scale(0.98);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+    /* Cuando el botón de fichar se pulsa, se pone verde */
+    button.primary.fichar-pressed {
+      background: #22c55e;
     }
 
     button.secondary { background: #e5e5ea; color: #222; }
@@ -265,6 +264,23 @@
       overflow: hidden;
     }
 
+    /* Resultados de búsqueda de dirección */
+    #lugarResultados {
+      margin-top: 0.3rem;
+    }
+
+    .resultado-lugar {
+      margin-top: 0.2rem;
+      padding: 0.3rem 0.4rem;
+      border-radius: 8px;
+      background: #f2f2f7;
+      cursor: pointer;
+    }
+
+    .resultado-lugar:hover {
+      background: #e5e5ea;
+    }
+
     @media (max-width: 640px) {
       .card-header {
         flex-direction: column;
@@ -291,6 +307,9 @@
         <div>
           <label for="obraLugar">Lugar (descripción)</label>
           <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
+          <button id="btnBuscarLugar" type="button" class="secondary" style="margin-top:0.3rem;">
+            Buscar en mapa
+          </button>
         </div>
       </div>
 
@@ -311,6 +330,7 @@
         <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
           Sin coordenadas seleccionadas.
         </p>
+        <div id="lugarResultados" class="small-text"></div>
       </div>
 
       <button id="btnAddObra" class="primary" style="margin-top:0.75rem;">Añadir obra</button>
@@ -404,6 +424,72 @@
       });
     }
 
+    function setupGeocoding() {
+      const lugarInput = document.getElementById("obraLugar");
+      const btnBuscar = document.getElementById("btnBuscarLugar");
+      const resultadosDiv = document.getElementById("lugarResultados");
+      const coordsText = document.getElementById("obraCoordsText");
+
+      btnBuscar.addEventListener("click", async () => {
+        const query = lugarInput.value.trim();
+        if (!query) {
+          resultadosDiv.textContent = "Escribe una dirección para buscar.";
+          return;
+        }
+
+        resultadosDiv.textContent = "Buscando...";
+        try {
+          const url =
+            "https://nominatim.openstreetmap.org/search?format=json&limit=5&q=" +
+            encodeURIComponent(query);
+          const res = await fetch(url, {
+            headers: {
+              "Accept-Language": "es"
+            }
+          });
+          const data = await res.json();
+
+          if (!Array.isArray(data) || data.length === 0) {
+            resultadosDiv.textContent = "No se han encontrado resultados.";
+            return;
+          }
+
+          resultadosDiv.innerHTML = "Selecciona una ubicación:";
+          data.forEach((item) => {
+            const opt = document.createElement("div");
+            opt.className = "resultado-lugar";
+            opt.textContent = item.display_name;
+            opt.addEventListener("click", () => {
+              const lat = parseFloat(item.lat);
+              const lon = parseFloat(item.lon);
+
+              if (obraMap) {
+                if (obraMarker) {
+                  obraMarker.setLatLng([lat, lon]);
+                } else {
+                  obraMarker = L.marker([lat, lon]).addTo(obraMap);
+                }
+                obraMap.setView([lat, lon], 16);
+              }
+
+              newObraCoords = { lat, lng: lon };
+              lugarInput.value = item.display_name;
+              coordsText.textContent =
+                "Coordenadas seleccionadas: " +
+                lat.toFixed(5) +
+                ", " +
+                lon.toFixed(5);
+              resultadosDiv.textContent = "Ubicación seleccionada.";
+            });
+            resultadosDiv.appendChild(opt);
+          });
+        } catch (e) {
+          console.error("Error en geocodificación:", e);
+          resultadosDiv.textContent = "Error buscando la dirección.";
+        }
+      });
+    }
+
     function setupAddObraForm() {
       const tituloInput = document.getElementById("obraTitulo");
       const lugarInput = document.getElementById("obraLugar");
@@ -411,6 +497,7 @@
       const addButton = document.getElementById("btnAddObra");
       const errorMsg = document.getElementById("obraError");
       const coordsText = document.getElementById("obraCoordsText");
+      const resultadosDiv = document.getElementById("lugarResultados");
 
       addButton.addEventListener("click", async () => {
         const titulo = tituloInput.value.trim();
@@ -449,6 +536,7 @@
           obraMarker = null;
         }
         coordsText.textContent = "Sin coordenadas seleccionadas.";
+        resultadosDiv.textContent = "";
       });
     }
 
@@ -748,6 +836,12 @@
 
         await saveToCloud();
 
+        // efecto visual: botón verde un instante
+        ficharBtn.classList.add("fichar-pressed");
+        setTimeout(() => {
+          ficharBtn.classList.remove("fichar-pressed");
+        }, 200);
+
         if (history.classList.contains("visible")) {
           renderHistory();
         }
@@ -867,6 +961,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       setupAddObraForm();
       setupMap();
+      setupGeocoding();
       subscribeToCloud();
     });
   </script>
