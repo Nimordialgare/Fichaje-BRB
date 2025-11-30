@@ -146,17 +146,16 @@
       cursor: not-allowed;
     }
 
-    /* Botón Fichar más grande */
-    button.fichar-btn {
-      padding: 0.7rem 1.6rem;
+    /* Botón fichar: más grande y verde */
+    .fichar-btn {
+      background: #22c55e;          /* verde */
       font-size: 1rem;
+      padding: 0.6rem 1.3rem;
       font-weight: 600;
     }
-
-    /* Cuando el fichaje se ha registrado, se pone verde 2s */
-    button.fichar-btn.fichado {
-      background: #22c55e;   /* verde */
-      color: #fff;
+    .fichar-btn:active,
+    .fichar-btn.fichando {
+      background: #16a34a;          /* verde más oscuro al pulsar */
     }
 
     .form-row {
@@ -264,21 +263,19 @@
       overflow: hidden;
     }
 
-    /* Input Lugar + botón Buscar en mapa */
+    /* input + botón "Buscar en mapa" */
     .input-with-button {
       display: flex;
       gap: 0.4rem;
       align-items: center;
     }
-
     .input-with-button input {
       flex: 1;
     }
-
-    .input-with-button button {
-      white-space: nowrap;
-      padding-inline: 0.8rem;
+    .input-with-button .small-btn {
+      padding: 0.3rem 0.7rem;
       font-size: 0.8rem;
+      border-radius: 999px;
     }
 
     @media (max-width: 640px) {
@@ -293,8 +290,9 @@
         flex-direction: column;
         align-items: stretch;
       }
-      .input-with-button button {
+      .input-with-button .small-btn {
         width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -314,8 +312,8 @@
         <div>
           <label for="obraLugar">Lugar (descripción)</label>
           <div class="input-with-button">
-            <input type="text" id="obraLugar" placeholder="Calle tal, municipio..." />
-            <button type="button" id="btnGeocode" class="secondary">Buscar en mapa</button>
+            <input type="text" id="obraLugar" placeholder="Calle Triana, Las Palmas de Gran Canaria" />
+            <button type="button" id="btnGeocode" class="secondary small-btn">Buscar en mapa</button>
           </div>
         </div>
       </div>
@@ -430,6 +428,60 @@
       });
     }
 
+    // Geocodificar dirección escrita en "Lugar" y mover mapa
+    function setupGeocode() {
+      const lugarInput = document.getElementById("obraLugar");
+      const btnGeocode = document.getElementById("btnGeocode");
+      const coordsText = document.getElementById("obraCoordsText");
+
+      if (!btnGeocode) return;
+
+      btnGeocode.addEventListener("click", async () => {
+        const query = lugarInput.value.trim();
+        if (!query) return;
+
+        try {
+          const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+          const resp = await fetch(url, {
+            headers: {
+              "Accept-Language": "es"
+            }
+          });
+          const data = await resp.json();
+          if (!data || data.length === 0) {
+            alert("No se encontró esa dirección en el mapa.");
+            return;
+          }
+
+          const { lat, lon } = data[0];
+          const latNum = parseFloat(lat);
+          const lonNum = parseFloat(lon);
+
+          if (isNaN(latNum) || isNaN(lonNum) || !obraMap) {
+            alert("No se pudo interpretar la ubicación.");
+            return;
+          }
+
+          obraMap.setView([latNum, lonNum], 16);
+          if (obraMarker) {
+            obraMarker.setLatLng([latNum, lonNum]);
+          } else {
+            obraMarker = L.marker([latNum, lonNum]).addTo(obraMap);
+          }
+
+          newObraCoords = { lat: latNum, lng: lonNum };
+          coordsText.textContent =
+            "Coordenadas seleccionadas: " +
+            latNum.toFixed(5) +
+            ", " +
+            lonNum.toFixed(5);
+        } catch (e) {
+          console.error(e);
+          alert("Error buscando la dirección en el mapa.");
+        }
+      });
+    }
+
     function setupAddObraForm() {
       const tituloInput = document.getElementById("obraTitulo");
       const lugarInput = document.getElementById("obraLugar");
@@ -437,55 +489,6 @@
       const addButton = document.getElementById("btnAddObra");
       const errorMsg = document.getElementById("obraError");
       const coordsText = document.getElementById("obraCoordsText");
-      const geocodeBtn = document.getElementById("btnGeocode");
-
-      // Botón "Buscar en mapa" usando Nominatim
-      geocodeBtn.addEventListener("click", async () => {
-        const query = lugarInput.value.trim();
-        if (!query) {
-          alert("Escribe una dirección en el campo 'Lugar' antes de buscar en el mapa.");
-          return;
-        }
-
-        try {
-          const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(query);
-          const res = await fetch(url, {
-            headers: {
-              "Accept": "application/json"
-            }
-          });
-          const data = await res.json();
-
-          if (!Array.isArray(data) || data.length === 0) {
-            alert("No se ha encontrado esa dirección. Prueba a ser más específico (calle, municipio…).");
-            return;
-          }
-
-          const result = data[0];
-          const lat = parseFloat(result.lat);
-          const lon = parseFloat(result.lon);
-
-          if (!isNaN(lat) && !isNaN(lon) && obraMap) {
-            newObraCoords = { lat, lng: lon };
-
-            obraMap.setView([lat, lon], 17);
-            if (obraMarker) {
-              obraMarker.setLatLng([lat, lon]);
-            } else {
-              obraMarker = L.marker([lat, lon]).addTo(obraMap);
-            }
-
-            coordsText.textContent =
-              "Coordenadas seleccionadas: " +
-              lat.toFixed(5) +
-              ", " +
-              lon.toFixed(5);
-          }
-        } catch (err) {
-          console.error("Error geocodificando dirección:", err);
-          alert("Ha ocurrido un error buscando la dirección en el mapa.");
-        }
-      });
 
       addButton.addEventListener("click", async () => {
         const titulo = tituloInput.value.trim();
@@ -753,7 +756,7 @@
       actions.className = "worker-actions";
 
       const ficharBtn = document.createElement("button");
-      ficharBtn.className = "primary fichar-btn";
+      ficharBtn.className = "fichar-btn";  // verde y grande
       ficharBtn.textContent = "Fichar";
 
       const exportBtn = document.createElement("button");
@@ -821,13 +824,11 @@
         }
         trabajador.fichajes.push(now);
 
-        await saveToCloud();
+        // efecto visual: verde oscuro un momento
+        ficharBtn.classList.add("fichando");
+        setTimeout(() => ficharBtn.classList.remove("fichando"), 200);
 
-        // Cambiar a verde 2s
-        ficharBtn.classList.add("fichado");
-        setTimeout(() => {
-          ficharBtn.classList.remove("fichado");
-        }, 2000);
+        await saveToCloud();
 
         if (history.classList.contains("visible")) {
           renderHistory();
@@ -948,6 +949,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       setupAddObraForm();
       setupMap();
+      setupGeocode();
       subscribeToCloud();
     });
   </script>
