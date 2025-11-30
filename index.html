@@ -21,7 +21,7 @@
     body {
       margin: 0;
       padding: 1.5rem;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui;
       background: #f5f5f7;
       color: #222;
     }
@@ -32,10 +32,7 @@
       font-size: 1.8rem;
     }
 
-    h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-    }
+    h2 { font-size: 1.2rem; }
 
     .layout {
       max-width: 1100px;
@@ -48,82 +45,7 @@
       padding: 1rem 1.2rem;
       margin-bottom: 1rem;
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border: 1px solid #e5e5ea;
-      border-left-width: 6px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .card-header-title {
-      font-weight: 700;
-      font-size: 1.15rem;
-    }
-
-    .title-box {
-      padding: 0.5rem 0.8rem;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: #f5f5f7;
-      min-width: 0;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .title-box:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .title-box .small-text {
-      margin-top: 0.1rem;
-    }
-
-    .obra-header-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      align-items: flex-end;
-      font-size: 0.85rem;
-    }
-
-    .small-text {
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    label {
-      font-size: 0.85rem;
-      display: block;
-      margin-bottom: 0.2rem;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 0.45rem 0.6rem;
-      border-radius: 10px;
-      border: 1px solid #d1d1d6;
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    input[type="text"]:focus {
-      border-color: #007aff;
-      box-shadow: 0 0 0 2px rgba(0,122,255,0.15);
-    }
-
-    select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid #d1d1d6;
-      font-size: 0.9rem;
-      background: #f9f9ff;
-      cursor: pointer;
+      border-left: 6px solid #007aff33;
     }
 
     button {
@@ -132,198 +54,58 @@
       border: none;
       font-size: 0.9rem;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
     }
 
-    button.primary { background: #007aff; color: #fff; }
-    button.secondary { background: #e5e5ea; color: #222; }
-    button.danger { background: #ffebee; color: #b71c1c; }
+    button.primary { background: #007aff; color: white; }
+    button.secondary { background: #dcdcdc; }
+    button.danger { background: #ffcccc; color: red; }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .obra-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-      font-size: 0.85rem;
-    }
-
-    .chip {
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      background: #f2f2f7;
-      font-size: 0.8rem;
-    }
-
-    .empresa-chip { font-weight: 500; }
-
-    .workers-list {
-      margin-top: 0.5rem;
-      border-top: 1px dashed #e5e5ea;
-      padding-top: 0.5rem;
-    }
-
-    .worker-item {
-      padding: 0.5rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      border-bottom: 1px dashed #f0f0f5;
-    }
-
-    .worker-main {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .worker-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-      font-size: 0.9rem;
-    }
-
-    .worker-name { font-weight: 500; }
-
-    .worker-dni {
-      font-size: 0.8rem;
-      color: #666;
-    }
-
-    .worker-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
+    /* 🔥 CHECK ANIMADO */
     .check {
-      font-size: 0.85rem;
       opacity: 0;
-      transition: opacity 0.2s ease;
-      color: #28a745;
+      background: #2ecc71;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 8px;
+      transition: opacity 0.25s ease-in-out;
+      font-size: 14px;
     }
 
-    .check.visible { opacity: 1; }
-
-    .history {
-      margin-top: 0.3rem;
-      padding: 0.4rem 0.6rem;
-      border-radius: 10px;
-      background: #f9f9fb;
-      font-size: 0.8rem;
-      display: none;
+    .check.visible {
+      opacity: 1;
     }
 
-    .history.visible { display: block; }
-
-    .history ul {
-      padding-left: 1.2rem;
-      margin: 0.3rem 0 0;
-    }
-
-    .history li { margin-bottom: 0.15rem; }
-
-    .empty-text {
-      font-size: 0.85rem;
-      color: #999;
-    }
-
-    .obra-details {
-      margin-top: 0.5rem;
-      display: none;
-    }
-
-    .obra-details.visible { display: block; }
-
-    #obraMap {
-      height: 260px;
-      border-radius: 12px;
-      margin-top: 0.5rem;
-      border: 1px solid #ddd;
-      overflow: hidden;
-    }
-
-    @media (max-width: 640px) {
-      .card-header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .obra-header-right {
-        align-items: flex-start;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="layout">
     <h1>Fichaje de obras – BRB Construcciones</h1>
 
-    <!-- Formulario para añadir obra -->
+    <!-- FORMulario de nueva obra -->
     <div class="card">
       <h2>Nueva obra</h2>
-      <div class="form-row">
-        <div>
-          <label for="obraTitulo">Título de la obra</label>
-          <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
-        </div>
-        <div>
-          <label for="obraLugar">Lugar (descripción)</label>
-          <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
-        </div>
-      </div>
 
-      <div class="obra-meta" style="margin-bottom:0.75rem;">
-        <span class="chip empresa-chip">Empresa: BRB Construcciones</span>
-        <div>
-          <label for="obraTipoEmpresa">Tipo de empresa</label>
-          <select id="obraTipoEmpresa">
-            <option value="SL">SL</option>
-            <option value="Autónomo">Autónomo</option>
-          </select>
-        </div>
-      </div>
+      <input id="obraTitulo" type="text" placeholder="Título" />
+      <br /><br />
+      <input id="obraLugar" type="text" placeholder="Lugar" />
+      <br /><br />
 
-      <div style="margin-top:0.75rem;">
-        <label>Selecciona la ubicación en el mapa (opcional)</label>
-        <div id="obraMap"></div>
-        <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
-          Sin coordenadas seleccionadas.
-        </p>
-      </div>
+      <select id="obraTipoEmpresa">
+        <option value="SL">SL</option>
+        <option value="Autónomo">Autónomo</option>
+      </select>
+      <br /><br />
 
-      <button id="btnAddObra" class="primary" style="margin-top:0.75rem;">Añadir obra</button>
-      <p id="obraError" class="small-text" style="color:#ff3b30; margin-top:0.5rem; display:none;">
-        Rellena al menos el título y el lugar.
-      </p>
+      <button id="btnAddObra" class="primary">Añadir obra</button>
     </div>
 
-    <!-- Listado de obras -->
     <div id="obrasContainer"></div>
   </div>
 
-  <!-- Leaflet JS para el mapa -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-  <!-- APP + FIREBASE en un script tipo módulo -->
+  <!-- FIREBASE -->
   <script type="module">
-    // Firebase modular desde CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
     import {
       getFirestore,
@@ -332,7 +114,7 @@
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-    // 🔥 Config de TU proyecto
+    // TU CONFIG
     const firebaseConfig = {
       apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
       authDomain: "fichaje-brb-c9385.firebaseapp.com",
@@ -344,22 +126,10 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const dataDocRef = doc(db, "app", "data"); // DOC ÚNICO
+
+    const dataDocRef = doc(db, "app", "data");
 
     const state = { obras: [] };
-
-    const obraColors = [
-      "#FFE4E6",
-      "#DBEAFE",
-      "#DCFCE7",
-      "#FEF9C3",
-      "#EDE9FE",
-      "#FCE7F3"
-    ];
-
-    let obraMap = null;
-    let obraMarker = null;
-    let newObraCoords = null;
 
     function createId() {
       return Date.now().toString(36) + Math.random().toString(36).slice(2);
@@ -369,523 +139,140 @@
       await setDoc(dataDocRef, { obras: state.obras });
     }
 
-    function setupMap() {
-      const mapContainer = document.getElementById("obraMap");
-      if (!mapContainer) return;
+    document.getElementById("btnAddObra").onclick = async () => {
+      const titulo = document.getElementById("obraTitulo").value.trim();
+      const lugar = document.getElementById("obraLugar").value.trim();
+      const tipo = document.getElementById("obraTipoEmpresa").value;
 
-      obraMap = L.map("obraMap").setView([27.919, -15.409], 10);
+      if (!titulo || !lugar) {
+        alert("Rellena título y lugar");
+        return;
+      }
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: "&copy; OpenStreetMap"
-      }).addTo(obraMap);
-
-      const coordsText = document.getElementById("obraCoordsText");
-
-      obraMap.on("click", (e) => {
-        newObraCoords = e.latlng;
-
-        if (obraMarker) {
-          obraMarker.setLatLng(e.latlng);
-        } else {
-          obraMarker = L.marker(e.latlng).addTo(obraMap);
-        }
-
-        coordsText.textContent =
-          "Coordenadas seleccionadas: " +
-          e.latlng.lat.toFixed(5) +
-          ", " +
-          e.latlng.lng.toFixed(5);
+      state.obras.push({
+        id: createId(),
+        titulo,
+        lugar,
+        empresaNombre: "BRB Construcciones",
+        empresaTipo: tipo,
+        trabajadores: [],
+        expanded: true
       });
-    }
 
-    function setupAddObraForm() {
-      const tituloInput = document.getElementById("obraTitulo");
-      const lugarInput = document.getElementById("obraLugar");
-      const tipoSelect = document.getElementById("obraTipoEmpresa");
-      const addButton = document.getElementById("btnAddObra");
-      const errorMsg = document.getElementById("obraError");
-      const coordsText = document.getElementById("obraCoordsText");
-
-      addButton.addEventListener("click", async () => {
-        const titulo = tituloInput.value.trim();
-        const lugar = lugarInput.value.trim();
-        const tipo = tipoSelect.value;
-
-        if (!titulo || !lugar) {
-          errorMsg.style.display = "block";
-          return;
-        }
-        errorMsg.style.display = "none";
-
-        const nuevaObra = {
-          id: createId(),
-          titulo,
-          lugar,
-          empresaNombre: "BRB Construcciones",
-          empresaTipo: tipo,
-          trabajadores: [],
-          expanded: false,
-          coords: newObraCoords
-            ? { lat: newObraCoords.lat, lng: newObraCoords.lng }
-            : null
-        };
-
-        state.obras.push(nuevaObra);
-        await saveToCloud();
-
-        tituloInput.value = "";
-        lugarInput.value = "";
-        tipoSelect.value = "SL";
-
-        newObraCoords = null;
-        if (obraMarker && obraMap) {
-          obraMap.removeLayer(obraMarker);
-          obraMarker = null;
-        }
-        coordsText.textContent = "Sin coordenadas seleccionadas.";
-      });
-    }
+      await saveToCloud();
+    };
 
     function renderObras() {
       const container = document.getElementById("obrasContainer");
       container.innerHTML = "";
 
-      if (state.obras.length === 0) {
-        const p = document.createElement("p");
-        p.className = "empty-text";
-        p.textContent = "Todavía no hay obras creadas.";
-        container.appendChild(p);
-        return;
-      }
-
-      state.obras.forEach((obra, index) => {
+      state.obras.forEach((obra) => {
         const card = document.createElement("div");
         card.className = "card";
 
-        const color = obraColors[index % obraColors.length];
-        card.style.borderLeftColor = color;
-
-        const header = document.createElement("div");
-        header.className = "card-header";
-
-        const titleBox = document.createElement("div");
-        titleBox.className = "title-box";
-        titleBox.style.backgroundColor = color + "33";
-        titleBox.style.borderColor = color;
-
-        const title = document.createElement("div");
-        title.className = "card-header-title";
+        const title = document.createElement("h3");
         title.textContent = obra.titulo;
 
-        const subtitle = document.createElement("div");
-        subtitle.className = "small-text";
-        subtitle.textContent = obra.lugar;
+        const lugar = document.createElement("div");
+        lugar.textContent = obra.lugar;
 
-        if (obra.coords) {
-          const coordsLine = document.createElement("div");
-          coordsLine.className = "small-text";
-          coordsLine.textContent =
-            "Coordenadas: " +
-            obra.coords.lat.toFixed(5) +
-            ", " +
-            obra.coords.lng.toFixed(5);
-          subtitle.appendChild(document.createElement("br"));
-          subtitle.appendChild(coordsLine);
-        }
+        const empresa = document.createElement("div");
+        empresa.textContent =
+          obra.empresaNombre + " · " + obra.empresaTipo;
 
-        titleBox.appendChild(title);
-        titleBox.appendChild(subtitle);
+        // añadir trabajador
+        const nombre = document.createElement("input");
+        nombre.placeholder = "Nombre";
 
-        const empresaDiv = document.createElement("div");
-        empresaDiv.className = "small-text";
-        empresaDiv.innerHTML =
-          "<strong>" +
-          obra.empresaNombre +
-          "</strong> · " +
-          obra.empresaTipo;
+        const apellidos = document.createElement("input");
+        apellidos.placeholder = "Apellidos";
 
-        const deleteObraBtn = document.createElement("button");
-        deleteObraBtn.className = "secondary danger";
-        deleteObraBtn.textContent = "Eliminar obra";
+        const dni = document.createElement("input");
+        dni.placeholder = "DNI";
 
-        deleteObraBtn.addEventListener("click", async () => {
-          const seguro = confirm(
-            "¿Seguro que quieres eliminar esta obra y todos sus trabajadores y fichajes?"
-          );
-          if (!seguro) return;
+        const btnAddTrab = document.createElement("button");
+        btnAddTrab.textContent = "Añadir trabajador";
+        btnAddTrab.className = "secondary";
 
-          state.obras = state.obras.filter((o) => o.id !== obra.id);
-          await saveToCloud();
-        });
+        const listaTrab = document.createElement("div");
 
-        const rightSide = document.createElement("div");
-        rightSide.className = "obra-header-right";
-        rightSide.appendChild(empresaDiv);
-        rightSide.appendChild(deleteObraBtn);
-
-        header.appendChild(titleBox);
-        header.appendChild(rightSide);
-
-        card.appendChild(header);
-
-        const details = document.createElement("div");
-        details.className = "obra-details";
-        if (obra.expanded) {
-          details.classList.add("visible");
-        }
-
-        const formTrab = document.createElement("div");
-        formTrab.className = "form-row";
-
-        const nombreWrapper = document.createElement("div");
-        const nombreLabel = document.createElement("label");
-        nombreLabel.textContent = "Nombre";
-        const nombreInput = document.createElement("input");
-        nombreInput.type = "text";
-        nombreInput.placeholder = "Nombre";
-        nombreWrapper.appendChild(nombreLabel);
-        nombreWrapper.appendChild(nombreInput);
-
-        const apellidosWrapper = document.createElement("div");
-        const apellidosLabel = document.createElement("label");
-        apellidosLabel.textContent = "Apellidos";
-        const apellidosInput = document.createElement("input");
-        apellidosInput.type = "text";
-        apellidosInput.placeholder = "Apellidos";
-        apellidosWrapper.appendChild(apellidosLabel);
-        apellidosWrapper.appendChild(apellidosInput);
-
-        const dniWrapper = document.createElement("div");
-        const dniLabel = document.createElement("label");
-        dniLabel.textContent = "DNI";
-        const dniInput = document.createElement("input");
-        dniInput.type = "text";
-        dniInput.placeholder = "00000000X";
-        dniWrapper.appendChild(dniLabel);
-        dniWrapper.appendChild(dniInput);
-
-        formTrab.appendChild(nombreWrapper);
-        formTrab.appendChild(apellidosWrapper);
-        formTrab.appendChild(dniWrapper);
-
-        const addTrabBtn = document.createElement("button");
-        addTrabBtn.textContent = "Añadir trabajador";
-        addTrabBtn.className = "secondary";
-
-        const errorTrab = document.createElement("p");
-        errorTrab.className = "small-text";
-        errorTrab.style.color = "#ff3b30";
-        errorTrab.style.display = "none";
-        errorTrab.style.marginTop = "0.3rem";
-        errorTrab.textContent =
-          "Nombre, apellidos y DNI son obligatorios.";
-
-        const workersContainer = document.createElement("div");
-        workersContainer.className = "workers-list";
-
-        if (!Array.isArray(obra.trabajadores)) {
-          obra.trabajadores = [];
-        }
-
-        if (obra.trabajadores.length === 0) {
-          const empty = document.createElement("p");
-          empty.className = "empty-text";
-          empty.textContent = "No hay trabajadores añadidos aún.";
-          workersContainer.appendChild(empty);
-        } else {
-          obra.trabajadores.forEach((trabajador) => {
-            const workerEl = createWorkerElement(obra, trabajador);
-            workersContainer.appendChild(workerEl);
-          });
-        }
-
-        details.appendChild(formTrab);
-        details.appendChild(addTrabBtn);
-        details.appendChild(errorTrab);
-        details.appendChild(workersContainer);
-
-        card.appendChild(details);
-
-        addTrabBtn.addEventListener("click", async () => {
-          const nombre = nombreInput.value.trim();
-          const apellidos = apellidosInput.value.trim();
-          const dni = dniInput.value.trim();
-
-          if (!nombre || !apellidos || !dni) {
-            errorTrab.style.display = "block";
+        btnAddTrab.onclick = async () => {
+          if (!nombre.value.trim() || !apellidos.value.trim() || !dni.value.trim()) {
+            alert("Rellena todos los campos");
             return;
           }
-          errorTrab.style.display = "none";
 
-          const nuevoTrab = {
+          obra.trabajadores.push({
             id: createId(),
-            nombre,
-            apellidos,
-            dni,
+            nombre: nombre.value.trim(),
+            apellidos: apellidos.value.trim(),
+            dni: dni.value.trim(),
             fichajes: []
+          });
+
+          await saveToCloud();
+        };
+
+        // Renderizar trabajadores
+        obra.trabajadores.forEach((trab) => {
+          const fila = document.createElement("div");
+          fila.style.marginTop = "10px";
+
+          fila.textContent =
+            trab.nombre + " " + trab.apellidos + " (" + trab.dni + ") ";
+
+          // Botón de fichar
+          const btnFichar = document.createElement("button");
+          btnFichar.textContent = "Fichar";
+          btnFichar.className = "primary";
+
+          // ✔ CHECK VISUAL
+          const check = document.createElement("span");
+          check.className = "check";
+          check.textContent = "✓ Fichado";
+
+          btnFichar.onclick = async () => {
+            trab.fichajes.push(Date.now());
+            await saveToCloud();
+
+            check.classList.add("visible");
+            setTimeout(() => check.classList.remove("visible"), 2000);
           };
 
-          const emptyMsg = workersContainer.querySelector(".empty-text");
-          if (emptyMsg) {
-            workersContainer.removeChild(emptyMsg);
-          }
-
-          obra.trabajadores.push(nuevoTrab);
-          await saveToCloud();
+          fila.appendChild(btnFichar);
+          fila.appendChild(check);
+          listaTrab.appendChild(fila);
         });
 
-        titleBox.addEventListener("click", async () => {
-          const wasExpanded = !!obra.expanded;
-          state.obras.forEach((o) => {
-            o.expanded = false;
-          });
-          obra.expanded = !wasExpanded;
-          await saveToCloud();
-        });
+        card.appendChild(title);
+        card.appendChild(lugar);
+        card.appendChild(empresa);
+        card.appendChild(nombre);
+        card.appendChild(apellidos);
+        card.appendChild(dni);
+        card.appendChild(btnAddTrab);
+        card.appendChild(listaTrab);
 
         container.appendChild(card);
       });
     }
 
-    function createWorkerElement(obra, trabajador) {
-      const workerItem = document.createElement("div");
-      workerItem.className = "worker-item";
-
-      const main = document.createElement("div");
-      main.className = "worker-main";
-
-      const info = document.createElement("div");
-      info.className = "worker-info";
-
-      const name = document.createElement("div");
-      name.className = "worker-name";
-      name.textContent = trabajador.nombre + " " + trabajador.apellidos;
-
-      const dni = document.createElement("div");
-      dni.className = "worker-dni";
-      dni.textContent = "DNI: " + trabajador.dni;
-
-      info.appendChild(name);
-      info.appendChild(dni);
-
-      const actions = document.createElement("div");
-      actions.className = "worker-actions";
-
-      const ficharBtn = document.createElement("button");
-      ficharBtn.className = "primary";
-      ficharBtn.textContent = "Fichar";
-
-      const exportBtn = document.createElement("button");
-      exportBtn.className = "secondary";
-      exportBtn.textContent = "Exportar historial (Word)";
-
-      const historyToggle = document.createElement("button");
-      historyToggle.className = "secondary";
-      historyToggle.textContent = "Ver historial";
-
-      const deleteWorkerBtn = document.createElement("button");
-      deleteWorkerBtn.className = "secondary danger";
-      deleteWorkerBtn.textContent = "Eliminar trabajador";
-
-      const check = document.createElement("span");
-      check.className = "check";
-      check.textContent = "✓ Fichado";
-
-      actions.appendChild(ficharBtn);
-      actions.appendChild(exportBtn);
-      actions.appendChild(historyToggle);
-      actions.appendChild(deleteWorkerBtn);
-      actions.appendChild(check);
-
-      main.appendChild(info);
-      main.appendChild(actions);
-
-      workerItem.appendChild(main);
-
-      const history = document.createElement("div");
-      history.className = "history";
-      workerItem.appendChild(history);
-
-      function renderHistory() {
-        history.innerHTML = "";
-        const title = document.createElement("div");
-        title.textContent = "Historial de fichajes:";
-        history.appendChild(title);
-
-        if (!Array.isArray(trabajador.fichajes) || trabajador.fichajes.length === 0) {
-          const empty = document.createElement("div");
-          empty.className = "empty-text";
-          empty.textContent = "Este trabajador aún no ha fichado.";
-          history.appendChild(empty);
-          return;
-        }
-
-        const list = document.createElement("ul");
-        const sorted = trabajador.fichajes
-          .slice()
-          .sort((a, b) => b - a);
-
-        sorted.forEach((ts, idx) => {
-          const li = document.createElement("li");
-          const fecha = new Date(ts);
-          li.textContent =
-            (idx + 1) + ". " + fecha.toLocaleString("es-ES");
-          list.appendChild(li);
-        });
-
-        history.appendChild(list);
+    onSnapshot(dataDocRef, (snap) => {
+      if (!snap.exists()) {
+        setDoc(dataDocRef, { obras: [] });
+        return;
       }
-
-      renderHistory();
-
-      ficharBtn.addEventListener("click", async () => {
-        const now = Date.now();
-        if (!Array.isArray(trabajador.fichajes)) {
-          trabajador.fichajes = [];
-        }
-        trabajador.fichajes.push(now);
-
-        await saveToCloud();
-
-        check.classList.add("visible");
-        setTimeout(() => {
-          check.classList.remove("visible");
-        }, 2000);
-
-        if (history.classList.contains("visible")) {
-          renderHistory();
-        }
-      });
-
-      historyToggle.addEventListener("click", () => {
-        const visible = history.classList.toggle("visible");
-        if (visible) {
-          renderHistory();
-          historyToggle.textContent = "Ocultar historial";
-        } else {
-          historyToggle.textContent = "Ver historial";
-        }
-      });
-
-      deleteWorkerBtn.addEventListener("click", async () => {
-        const seguro = confirm(
-          "¿Eliminar al trabajador " +
-            trabajador.nombre +
-            " " +
-            trabajador.apellidos +
-            " y todos sus fichajes?"
-        );
-        if (!seguro) return;
-
-        obra.trabajadores = obra.trabajadores.filter(
-          (t) => t.id !== trabajador.id
-        );
-        await saveToCloud();
-      });
-
-      exportBtn.addEventListener("click", () => {
-        if (!Array.isArray(trabajador.fichajes) || trabajador.fichajes.length === 0) {
-          alert("Este trabajador aún no tiene fichajes para exportar.");
-          return;
-        }
-
-        const sorted = trabajador.fichajes
-          .slice()
-          .sort((a, b) => a - b);
-
-        let rows = "";
-        sorted.forEach((ts, index) => {
-          const fecha = new Date(ts).toLocaleString("es-ES");
-          rows +=
-            "<tr><td>" +
-            (index + 1) +
-            "</td><td>" +
-            fecha +
-            "</td></tr>";
-        });
-
-        const html =
-          "<html><head><meta charset='utf-8'><title>Historial de fichajes</title></head><body>" +
-          "<h2>Historial de fichajes</h2>" +
-          "<p><b>Obra:</b> " +
-          obra.titulo +
-          " (" +
-          obra.lugar +
-          ")</p>" +
-          "<p><b>Empresa:</b> " +
-          obra.empresaNombre +
-          " · " +
-          obra.empresaTipo +
-          "</p>" +
-          "<p><b>Trabajador:</b> " +
-          trabajador.nombre +
-          " " +
-          trabajador.apellidos +
-          "</p>" +
-          "<p><b>DNI:</b> " +
-          trabajador.dni +
-          "</p><br/>" +
-          "<table border='1' cellpadding='4' cellspacing='0'>" +
-          "<tr><th>#</th><th>Fecha y hora de fichaje</th></tr>" +
-          rows +
-          "</table></body></html>";
-
-        const blob = new Blob(["\ufeff", html], {
-          type: "application/msword"
-        });
-        const url = URL.createObjectURL(blob);
-
-        const apellidoLimpio = trabajador.apellidos.replace(/\s+/g, "_");
-        const nombreLimpio = trabajador.nombre.replace(/\s+/g, "_");
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "historial_" + apellidoLimpio + "_" + nombreLimpio + ".doc";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-
-      return workerItem;
-    }
-
-    function subscribeToCloud() {
-      onSnapshot(
-        dataDocRef,
-        async (snap) => {
-          if (!snap.exists()) {
-            await setDoc(dataDocRef, { obras: [] });
-            return;
-          }
-          const data = snap.data() || {};
-          state.obras = Array.isArray(data.obras) ? data.obras : [];
-          renderObras();
-        },
-        (err) => {
-          console.error("Error escuchando Firestore:", err);
-          alert("Error escuchando datos de la nube: " + err.message);
-        }
-      );
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      setupAddObraForm();
-      setupMap();
-      subscribeToCloud();
+      state.obras = snap.data().obras || [];
+      renderObras();
     });
   </script>
 
-  <!-- Registro del Service Worker -->
+  <!-- SERVICE WORKER -->
   <script>
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("./sw.js")
-          .then(() => console.log("Service Worker registrado"))
-          .catch((err) => console.error("Error registrando Service Worker", err));
-      });
+      navigator.serviceWorker.register("sw.js");
     }
   </script>
+
 </body>
 </html>
