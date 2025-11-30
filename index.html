@@ -135,26 +135,29 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.08s ease;
     }
 
-    button.primary { background: #007aff; color: #fff; }
+    button.primary {
+      background: #007aff;
+      color: #fff;
+      font-size: 1rem;           /* más grande */
+      padding: 0.6rem 1.4rem;    /* más grande */
+    }
+
+    /* Mientras se pulsa el botón de Fichar (activo) se ve verde */
+    button.primary:active {
+      background: #22c55e; /* verde */
+      transform: scale(0.98);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+    }
+
     button.secondary { background: #e5e5ea; color: #222; }
     button.danger { background: #ffebee; color: #b71c1c; }
 
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-    }
-
-    /* Fichar más grande y al pulsarlo en verde */
-    .fichar-btn {
-      padding: 0.65rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .fichar-btn:active {
-      background: #28a745; /* verde mientras se mantiene pulsado */
     }
 
     .form-row {
@@ -334,7 +337,7 @@
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-    // Config de TU proyecto
+    // 🔥 Config de TU proyecto
     const firebaseConfig = {
       apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
       authDomain: "fichaje-brb-c9385.firebaseapp.com",
@@ -675,7 +678,7 @@
       actions.className = "worker-actions";
 
       const ficharBtn = document.createElement("button");
-      ficharBtn.className = "primary fichar-btn";
+      ficharBtn.className = "primary";
       ficharBtn.textContent = "Fichar";
 
       const exportBtn = document.createElement("button");
