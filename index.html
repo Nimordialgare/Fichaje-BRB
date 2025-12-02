@@ -16,151 +16,144 @@
   />
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #22c55e;      /* verde principal */
+      --color-primary-dark: #16a34a; /* verde al pulsar */
+      --color-bg: #f3f4f6;
+      --color-card: #ffffff;
+      --color-border: #e5e7eb;
+      --color-text: #111827;
+      --radius-card: 18px;
+      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
 
     body {
       margin: 0;
-      padding: 1.5rem;
+      min-height: 100vh;
+      padding: 1.25rem;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f7;
-      color: #222;
+      background: radial-gradient(circle at top, #e0f2fe 0, #f9fafb 42%, #f3f4f6 100%);
+      color: var(--color-text);
     }
 
-    h1 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-    }
-
-    .layout {
+    .app-shell {
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border: 1px solid #e5e5ea;
-      border-left-width: 6px;
+    header.app-header {
+      margin-bottom: 1.25rem;
     }
 
-    .card-header {
+    header.app-header h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.25rem;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .card-header-title {
+    header.app-header h1 span.logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      font-size: 0.95rem;
       font-weight: 700;
-      font-size: 1.15rem;
     }
 
-    .title-box {
-      padding: 0.5rem 0.8rem;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: #f5f5f7;
-      min-width: 0;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    header.app-header p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #6b7280;
     }
 
-    .title-box:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr);
+      gap: 1.25rem;
+      align-items: flex-start;
     }
 
-    .title-box .small-text {
-      margin-top: 0.1rem;
+    .card {
+      background: var(--color-card);
+      border-radius: var(--radius-card);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.3);
     }
 
-    .obra-header-right {
+    .card-title {
       display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      align-items: flex-end;
-      font-size: 0.85rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      gap: 0.5rem;
     }
 
-    .small-text {
-      font-size: 0.85rem;
-      color: #666;
+    .card-title h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card-title h2::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-primary);
+    }
+
+    .card-title span {
+      font-size: 0.8rem;
+      color: #9ca3af;
     }
 
     label {
       font-size: 0.85rem;
       display: block;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
+      color: #4b5563;
+      font-weight: 500;
     }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 0.45rem 0.6rem;
-      border-radius: 10px;
-      border: 1px solid #d1d1d6;
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    input[type="text"]:focus {
-      border-color: #007aff;
-      box-shadow: 0 0 0 2px rgba(0,122,255,0.15);
-    }
-
+    input[type="text"],
     select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid #d1d1d6;
-      font-size: 0.9rem;
-      background: #f9f9ff;
-      cursor: pointer;
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border-radius: 11px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+      outline: none;
+      background: #f9fafb;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, transform 0.05s ease;
     }
 
-    button {
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    button.primary { background: #007aff; color: #fff; }
-    button.secondary { background: #e5e5ea; color: #222; }
-    button.danger { background: #ffebee; color: #b71c1c; }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Botón fichar: más grande y verde */
-    .fichar-btn {
-      background: #22c55e;          /* verde */
-      font-size: 1rem;
-      padding: 0.6rem 1.3rem;
-      font-weight: 600;
-    }
-    .fichar-btn:active,
-    .fichar-btn.fichando {
-      background: #16a34a;          /* verde más oscuro al pulsar */
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--color-primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
+      transform: translateY(-0.5px);
     }
 
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.75rem;
       margin-bottom: 0.75rem;
     }
@@ -168,38 +161,118 @@
     .obra-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.6rem;
       align-items: center;
       font-size: 0.85rem;
+      margin-bottom: 0.75rem;
     }
 
     .chip {
-      padding: 0.2rem 0.6rem;
+      padding: 0.25rem 0.7rem;
       border-radius: 999px;
-      background: #f2f2f7;
+      background: #ecfdf3;
+      border: 1px solid #bbf7d0;
       font-size: 0.8rem;
+      color: #166534;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
     }
 
-    .empresa-chip { font-weight: 500; }
+    .chip::before {
+      content: "●";
+      font-size: 0.55rem;
+    }
+
+    .small-text {
+      font-size: 0.82rem;
+      color: #6b7280;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      transition: transform 0.07s ease, box-shadow 0.12s ease, background 0.12s ease, color 0.12s ease;
+      font-weight: 500;
+    }
+
+    button.primary {
+      background: var(--color-primary);
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.35);
+    }
+
+    button.primary:hover {
+      background: var(--color-primary-dark);
+      box-shadow: 0 10px 18px rgba(22, 163, 74, 0.45);
+      transform: translateY(-1px);
+    }
+
+    button.primary:active {
+      transform: translateY(0);
+      background: var(--color-primary-dark);
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.45);
+    }
+
+    button.secondary {
+      background: #eef2ff;
+      color: #4338ca;
+      box-shadow: 0 4px 10px rgba(129, 140, 248, 0.25);
+    }
+
+    button.secondary:hover {
+      background: #e0e7ff;
+      transform: translateY(-1px);
+    }
+
+    button.danger {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      box-shadow: none;
+    }
+
+    button.danger:hover {
+      background: #fee2e2;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    #btnAddObra {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
 
     .workers-list {
-      margin-top: 0.5rem;
-      border-top: 1px dashed #e5e5ea;
-      padding-top: 0.5rem;
+      margin-top: 0.65rem;
+      border-top: 1px dashed #e5e7eb;
+      padding-top: 0.55rem;
     }
 
     .worker-item {
-      padding: 0.5rem 0;
+      padding: 0.6rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      border-bottom: 1px dashed #f0f0f5;
+      gap: 0.4rem;
+      border-bottom: 1px dashed #e5e7eb;
     }
 
     .worker-main {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.6rem;
       justify-content: space-between;
       align-items: center;
     }
@@ -207,15 +280,17 @@
     .worker-info {
       display: flex;
       flex-direction: column;
-      gap: 0.1rem;
-      font-size: 0.9rem;
+      gap: 0.12rem;
+      font-size: 0.92rem;
     }
 
-    .worker-name { font-weight: 500; }
+    .worker-name {
+      font-weight: 600;
+    }
 
     .worker-dni {
       font-size: 0.8rem;
-      color: #666;
+      color: #6b7280;
     }
 
     .worker-actions {
@@ -223,29 +298,35 @@
       flex-wrap: wrap;
       gap: 0.4rem;
       align-items: center;
+      justify-content: flex-end;
     }
 
     .history {
-      margin-top: 0.3rem;
+      margin-top: 0.25rem;
       padding: 0.4rem 0.6rem;
-      border-radius: 10px;
-      background: #f9f9fb;
+      border-radius: 12px;
+      background: #f3f4ff;
       font-size: 0.8rem;
       display: none;
+      border: 1px dashed #c7d2fe;
     }
 
-    .history.visible { display: block; }
+    .history.visible {
+      display: block;
+    }
 
     .history ul {
-      padding-left: 1.2rem;
-      margin: 0.3rem 0 0;
+      padding-left: 1.1rem;
+      margin: 0.25rem 0 0;
     }
 
-    .history li { margin-bottom: 0.15rem; }
+    .history li {
+      margin-bottom: 0.15rem;
+    }
 
     .empty-text {
       font-size: 0.85rem;
-      color: #999;
+      color: #9ca3af;
     }
 
     .obra-details {
@@ -253,98 +334,184 @@
       display: none;
     }
 
-    .obra-details.visible { display: block; }
+    .obra-details.visible {
+      display: block;
+    }
+
+    .card-obra {
+      border-left-width: 6px;
+    }
+
+    .title-box {
+      padding: 0.6rem 0.85rem;
+      border-radius: 14px;
+      background: #f9fafb;
+    }
+
+    .title-box .card-header-title {
+      margin-bottom: 0.15rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .obra-header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: flex-end;
+      font-size: 0.82rem;
+    }
 
     #obraMap {
       height: 260px;
-      border-radius: 12px;
-      margin-top: 0.5rem;
-      border: 1px solid #ddd;
+      border-radius: 14px;
+      margin-top: 0.45rem;
+      border: 1px solid #d1d5db;
       overflow: hidden;
     }
 
-    /* input + botón "Buscar en mapa" */
-    .input-with-button {
-      display: flex;
-      gap: 0.4rem;
-      align-items: center;
-    }
-    .input-with-button input {
-      flex: 1;
-    }
-    .input-with-button .small-btn {
-      padding: 0.3rem 0.7rem;
-      font-size: 0.8rem;
-      border-radius: 999px;
-    }
-
-    @media (max-width: 640px) {
-      .card-header {
-        flex-direction: column;
-        align-items: stretch;
+    /* 📱 Mejora fuerte para móvil / tablet */
+    @media (max-width: 900px) {
+      body {
+        padding: 0.75rem;
       }
-      .obra-header-right {
+
+      .app-shell {
+        max-width: 100%;
+      }
+
+      .layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      header.app-header h1 {
+        font-size: 1.6rem;
+      }
+
+      header.app-header p {
+        font-size: 0.9rem;
+      }
+
+      .card {
+        padding: 0.9rem 0.9rem 1.1rem;
+        border-radius: 16px;
+      }
+
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      input[type="text"],
+      select {
+        font-size: 1rem;
+        padding: 0.7rem 0.85rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+        padding: 0.65rem 1rem;
+      }
+
+      .worker-main {
+        flex-direction: column;
         align-items: flex-start;
       }
-      .input-with-button {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .input-with-button .small-btn {
+
+      .worker-actions {
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .worker-actions button {
+        flex: 1 1 45%;
+        min-width: 140px;
+      }
+
+      #obraMap {
+        height: 230px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header.app-header h1 {
+        font-size: 1.45rem;
+      }
+      button.primary {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <h1>Fichaje de obras – BRB Construcciones</h1>
+  <div class="app-shell">
+    <header class="app-header">
+      <h1>
+        <span class="logo-badge">BRB</span>
+        Fichaje de obras
+      </h1>
+      <p>Gestiona obras y fichajes de trabajadores desde móvil, tablet o PC.</p>
+    </header>
 
-    <!-- Formulario para añadir obra -->
-    <div class="card">
-      <h2>Nueva obra</h2>
-      <div class="form-row">
-        <div>
-          <label for="obraTitulo">Título de la obra</label>
-          <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
+    <div class="layout-grid">
+      <!-- Columna izquierda: nueva obra -->
+      <section class="card">
+        <div class="card-title">
+          <h2>Nueva obra</h2>
+          <span>Alta rápida de obra</span>
         </div>
-        <div>
-          <label for="obraLugar">Lugar (descripción)</label>
-          <div class="input-with-button">
-            <input type="text" id="obraLugar" placeholder="Calle Triana, Las Palmas de Gran Canaria" />
-            <button type="button" id="btnGeocode" class="secondary small-btn">Buscar en mapa</button>
+
+        <div class="form-row">
+          <div>
+            <label for="obraTitulo">Título de la obra</label>
+            <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
+          </div>
+          <div>
+            <label for="obraLugar">Lugar (descripción)</label>
+            <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
           </div>
         </div>
-      </div>
 
-      <div class="obra-meta" style="margin-bottom:0.75rem;">
-        <span class="chip empresa-chip">Empresa: BRB Construcciones</span>
-        <div>
-          <label for="obraTipoEmpresa">Tipo de empresa</label>
-          <select id="obraTipoEmpresa">
-            <option value="SL">SL</option>
-            <option value="Autónomo">Autónomo</option>
-          </select>
+        <div class="obra-meta">
+          <span class="chip">BRB Construcciones</span>
+          <div style="min-width: 140px;">
+            <label for="obraTipoEmpresa">Tipo de empresa</label>
+            <select id="obraTipoEmpresa">
+              <option value="SL">SL</option>
+              <option value="Autónomo">Autónomo</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div style="margin-top:0.75rem;">
-        <label>Selecciona la ubicación en el mapa (opcional)</label>
-        <div id="obraMap"></div>
-        <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
-          Sin coordenadas seleccionadas.
+        <div>
+          <label>Ubicación en mapa (opcional)</label>
+          <div id="obraMap"></div>
+          <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
+            Toca el mapa para guardar coordenadas de la obra.
+          </p>
+        </div>
+
+        <button id="btnAddObra" class="primary">Añadir obra</button>
+        <p id="obraError" class="small-text" style="color:#ef4444; margin-top:0.5rem; display:none;">
+          Rellena al menos el título y el lugar.
         </p>
-      </div>
+      </section>
 
-      <button id="btnAddObra" class="primary" style="margin-top:0.75rem;">Añadir obra</button>
-      <p id="obraError" class="small-text" style="color:#ff3b30; margin-top:0.5rem; display:none;">
-        Rellena al menos el título y el lugar.
-      </p>
+      <!-- Columna derecha: listado de obras -->
+      <section class="card">
+        <div class="card-title">
+          <h2>Obras y trabajadores</h2>
+          <span>Gestiona fichajes y exporta historiales</span>
+        </div>
+        <div id="obrasContainer"></div>
+      </section>
     </div>
-
-    <!-- Listado de obras -->
-    <div id="obrasContainer"></div>
   </div>
 
   <!-- Leaflet JS para el mapa -->
@@ -352,7 +519,6 @@
 
   <!-- APP + FIREBASE en un script tipo módulo -->
   <script type="module">
-    // Firebase modular desde CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
     import {
       getFirestore,
@@ -361,7 +527,6 @@
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-    // 🔥 Config de TU proyecto
     const firebaseConfig = {
       apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
       authDomain: "fichaje-brb-c9385.firebaseapp.com",
@@ -373,17 +538,17 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const dataDocRef = doc(db, "app", "data"); // DOC ÚNICO
+    const dataDocRef = doc(db, "app", "data"); // Documento único
 
     const state = { obras: [] };
 
     const obraColors = [
-      "#FFE4E6",
-      "#DBEAFE",
-      "#DCFCE7",
-      "#FEF9C3",
-      "#EDE9FE",
-      "#FCE7F3"
+      "#22c55e",
+      "#3b82f6",
+      "#6366f1",
+      "#f97316",
+      "#ec4899",
+      "#0ea5e9"
     ];
 
     let obraMap = null;
@@ -425,60 +590,6 @@
           e.latlng.lat.toFixed(5) +
           ", " +
           e.latlng.lng.toFixed(5);
-      });
-    }
-
-    // Geocodificar dirección escrita en "Lugar" y mover mapa
-    function setupGeocode() {
-      const lugarInput = document.getElementById("obraLugar");
-      const btnGeocode = document.getElementById("btnGeocode");
-      const coordsText = document.getElementById("obraCoordsText");
-
-      if (!btnGeocode) return;
-
-      btnGeocode.addEventListener("click", async () => {
-        const query = lugarInput.value.trim();
-        if (!query) return;
-
-        try {
-          const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
-          const resp = await fetch(url, {
-            headers: {
-              "Accept-Language": "es"
-            }
-          });
-          const data = await resp.json();
-          if (!data || data.length === 0) {
-            alert("No se encontró esa dirección en el mapa.");
-            return;
-          }
-
-          const { lat, lon } = data[0];
-          const latNum = parseFloat(lat);
-          const lonNum = parseFloat(lon);
-
-          if (isNaN(latNum) || isNaN(lonNum) || !obraMap) {
-            alert("No se pudo interpretar la ubicación.");
-            return;
-          }
-
-          obraMap.setView([latNum, lonNum], 16);
-          if (obraMarker) {
-            obraMarker.setLatLng([latNum, lonNum]);
-          } else {
-            obraMarker = L.marker([latNum, lonNum]).addTo(obraMap);
-          }
-
-          newObraCoords = { lat: latNum, lng: lonNum };
-          coordsText.textContent =
-            "Coordenadas seleccionadas: " +
-            latNum.toFixed(5) +
-            ", " +
-            lonNum.toFixed(5);
-        } catch (e) {
-          console.error(e);
-          alert("Error buscando la dirección en el mapa.");
-        }
       });
     }
 
@@ -526,7 +637,7 @@
           obraMap.removeLayer(obraMarker);
           obraMarker = null;
         }
-        coordsText.textContent = "Sin coordenadas seleccionadas.";
+        coordsText.textContent = "Toca el mapa para guardar coordenadas de la obra.";
       });
     }
 
@@ -544,7 +655,7 @@
 
       state.obras.forEach((obra, index) => {
         const card = document.createElement("div");
-        card.className = "card";
+        card.className = "card card-obra";
 
         const color = obraColors[index % obraColors.length];
         card.style.borderLeftColor = color;
@@ -554,8 +665,8 @@
 
         const titleBox = document.createElement("div");
         titleBox.className = "title-box";
-        titleBox.style.backgroundColor = color + "33";
-        titleBox.style.borderColor = color;
+        titleBox.style.backgroundColor = color + "15";
+        titleBox.style.borderColor = color + "55";
 
         const title = document.createElement("div");
         title.className = "card-header-title";
@@ -589,7 +700,7 @@
           obra.empresaTipo;
 
         const deleteObraBtn = document.createElement("button");
-        deleteObraBtn.className = "secondary danger";
+        deleteObraBtn.className = "danger";
         deleteObraBtn.textContent = "Eliminar obra";
 
         deleteObraBtn.addEventListener("click", async () => {
@@ -658,7 +769,7 @@
 
         const errorTrab = document.createElement("p");
         errorTrab.className = "small-text";
-        errorTrab.style.color = "#ff3b30";
+        errorTrab.style.color = "#ef4444";
         errorTrab.style.display = "none";
         errorTrab.style.marginTop = "0.3rem";
         errorTrab.textContent =
@@ -756,7 +867,7 @@
       actions.className = "worker-actions";
 
       const ficharBtn = document.createElement("button");
-      ficharBtn.className = "fichar-btn";  // verde y grande
+      ficharBtn.className = "primary";
       ficharBtn.textContent = "Fichar";
 
       const exportBtn = document.createElement("button");
@@ -768,7 +879,7 @@
       historyToggle.textContent = "Ver historial";
 
       const deleteWorkerBtn = document.createElement("button");
-      deleteWorkerBtn.className = "secondary danger";
+      deleteWorkerBtn.className = "danger";
       deleteWorkerBtn.textContent = "Eliminar trabajador";
 
       actions.appendChild(ficharBtn);
@@ -823,10 +934,6 @@
           trabajador.fichajes = [];
         }
         trabajador.fichajes.push(now);
-
-        // efecto visual: verde oscuro un momento
-        ficharBtn.classList.add("fichando");
-        setTimeout(() => ficharBtn.classList.remove("fichando"), 200);
 
         await saveToCloud();
 
@@ -949,7 +1056,6 @@
     window.addEventListener("DOMContentLoaded", () => {
       setupAddObraForm();
       setupMap();
-      setupGeocode();
       subscribeToCloud();
     });
   </script>
