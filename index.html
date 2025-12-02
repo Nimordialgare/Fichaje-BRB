@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <title>Fichaje Obras – BRB Construcciones</title>
 
+  <!-- Vista correcta en móvil / tablet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Manifest PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#007aff" />
+  <meta name="theme-color" content="#16a34a" />
 
   <!-- Leaflet CSS para el mapa -->
   <link
@@ -16,257 +19,250 @@
   />
 
   <style>
+    :root {
+      --bg-body: #0f172a;
+      --bg-gradient: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+      --card-bg: #0b1120;
+      --card-border: #1e293b;
+      --accent: #16a34a; /* verde principal */
+      --accent-soft: rgba(22, 163, 74, 0.15);
+      --accent-strong: #15803d;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --chip-bg: #111827;
+      --danger-bg: #7f1d1d;
+      --danger-soft: #fef2f2;
+      --danger-text: #fecaca;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    :root {
-      --color-primary: #22c55e;      /* verde principal */
-      --color-primary-dark: #16a34a; /* verde al pulsar */
-      --color-bg: #f3f4f6;
-      --color-card: #ffffff;
-      --color-border: #e5e7eb;
-      --color-text: #111827;
-      --radius-card: 18px;
-      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
-    }
-
     body {
       margin: 0;
-      min-height: 100vh;
-      padding: 1.25rem;
+      padding: 1.5rem;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #e0f2fe 0, #f9fafb 42%, #f3f4f6 100%);
-      color: var(--color-text);
+      background: var(--bg-body);
+      background-image: var(--bg-gradient);
+      color: var(--text-main);
     }
 
-    .app-shell {
+    h1 {
+      margin-top: 0;
+      margin-bottom: 1.25rem;
+      font-size: 2rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .layout {
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    header.app-header {
-      margin-bottom: 1.25rem;
-    }
-
-    header.app-header h1 {
-      margin: 0 0 0.35rem;
-      font-size: 1.9rem;
-      font-weight: 800;
-      letter-spacing: 0.01em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    header.app-header h1 span.logo-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-
-    header.app-header p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-
-    .layout-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr);
-      gap: 1.25rem;
-      align-items: flex-start;
-    }
-
     .card {
-      background: var(--color-card);
-      border-radius: var(--radius-card);
-      padding: 1rem 1.1rem;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: linear-gradient(145deg, #020617, #020617, #020617, #020617);
+      border-radius: 20px;
+      padding: 1.1rem 1.3rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
+      border: 1px solid var(--card-border);
+      border-left-width: 6px;
     }
 
-    .card-title {
+    .card-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.8rem;
-      gap: 0.5rem;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
     }
 
-    .card-title h2 {
-      margin: 0;
-      font-size: 1.05rem;
+    .card-header-title {
       font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .title-box {
+      padding: 0.6rem 0.9rem;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.85);
+      min-width: 0;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
+    }
+
+    .title-box:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.75);
+      border-color: rgba(148, 163, 184, 1);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .title-box .small-text {
+      margin-top: 0.2rem;
+    }
+
+    .obra-header-right {
       display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: flex-end;
+      font-size: 0.85rem;
     }
 
-    .card-title h2::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--color-primary);
-    }
-
-    .card-title span {
-      font-size: 0.8rem;
-      color: #9ca3af;
+    .small-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
     }
 
     label {
       font-size: 0.85rem;
       display: block;
       margin-bottom: 0.25rem;
-      color: #4b5563;
-      font-weight: 500;
+      color: var(--text-muted);
     }
 
-    input[type="text"],
-    select {
+    input[type="text"] {
       width: 100%;
-      padding: 0.6rem 0.8rem;
-      border-radius: 11px;
-      border: 1px solid #d1d5db;
+      padding: 0.55rem 0.7rem;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
       font-size: 0.95rem;
       outline: none;
-      background: #f9fafb;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, transform 0.05s ease;
+      background: #020617;
+      color: var(--text-main);
     }
 
-    input[type="text"]:focus,
-    select:focus {
-      border-color: var(--color-primary);
-      background: #ffffff;
-      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
-      transform: translateY(-0.5px);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .obra-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      align-items: center;
-      font-size: 0.85rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .chip {
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      background: #ecfdf3;
-      border: 1px solid #bbf7d0;
-      font-size: 0.8rem;
-      color: #166534;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .chip::before {
-      content: "●";
-      font-size: 0.55rem;
-    }
-
-    .small-text {
-      font-size: 0.82rem;
+    input[type="text"]::placeholder {
       color: #6b7280;
     }
 
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+      background: #020617;
+    }
+
+    select {
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      font-size: 0.9rem;
+      background: #020617;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
     button {
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1rem;
       border-radius: 999px;
       border: none;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.3rem;
-      transition: transform 0.07s ease, box-shadow 0.12s ease, background 0.12s ease, color 0.12s ease;
-      font-weight: 500;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease, filter 0.08s ease;
+      white-space: nowrap;
     }
 
     button.primary {
-      background: var(--color-primary);
-      color: #ffffff;
-      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.35);
+      background: var(--accent);
+      color: #ecfdf5;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(22, 163, 74, 0.55);
     }
 
     button.primary:hover {
-      background: var(--color-primary-dark);
-      box-shadow: 0 10px 18px rgba(22, 163, 74, 0.45);
-      transform: translateY(-1px);
+      background: var(--accent-strong);
+      box-shadow: 0 12px 32px rgba(22, 163, 74, 0.65);
     }
 
     button.primary:active {
-      transform: translateY(0);
-      background: var(--color-primary-dark);
-      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.45);
+      transform: scale(0.97);
+      filter: brightness(0.95);
+      box-shadow: 0 7px 18px rgba(22, 163, 74, 0.6);
     }
 
     button.secondary {
-      background: #eef2ff;
-      color: #4338ca;
-      box-shadow: 0 4px 10px rgba(129, 140, 248, 0.25);
+      background: #020617;
+      color: var(--text-main);
+      border: 1px solid #1f2937;
     }
 
     button.secondary:hover {
-      background: #e0e7ff;
-      transform: translateY(-1px);
+      background: #020617;
+      border-color: #374151;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.6);
+    }
+
+    button.secondary:active {
+      transform: scale(0.97);
+      filter: brightness(0.96);
     }
 
     button.danger {
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-      box-shadow: none;
-    }
-
-    button.danger:hover {
-      background: #fee2e2;
+      background: #111827;
+      color: var(--danger-text);
+      border-color: #7f1d1d;
     }
 
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       box-shadow: none;
-      transform: none;
     }
 
-    #btnAddObra {
-      width: 100%;
-      margin-top: 0.5rem;
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .obra-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .chip {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--chip-bg);
+      font-size: 0.8rem;
+      border: 1px solid #1f2937;
+    }
+
+    .empresa-chip {
+      font-weight: 500;
+      color: #e5e7eb;
     }
 
     .workers-list {
-      margin-top: 0.65rem;
-      border-top: 1px dashed #e5e7eb;
-      padding-top: 0.55rem;
+      margin-top: 0.6rem;
+      border-top: 1px dashed #1f2937;
+      padding-top: 0.6rem;
     }
 
     .worker-item {
-      padding: 0.6rem 0;
+      padding: 0.5rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      border-bottom: 1px dashed #e5e7eb;
+      gap: 0.35rem;
+      border-bottom: 1px dashed #111827;
     }
 
     .worker-main {
@@ -280,17 +276,17 @@
     .worker-info {
       display: flex;
       flex-direction: column;
-      gap: 0.12rem;
-      font-size: 0.92rem;
+      gap: 0.1rem;
+      font-size: 0.9rem;
     }
 
     .worker-name {
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .worker-dni {
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--text-muted);
     }
 
     .worker-actions {
@@ -301,14 +297,25 @@
       justify-content: flex-end;
     }
 
+    .check {
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      color: #4ade80;
+    }
+
+    .check.visible {
+      opacity: 1;
+    }
+
     .history {
-      margin-top: 0.25rem;
-      padding: 0.4rem 0.6rem;
+      margin-top: 0.3rem;
+      padding: 0.45rem 0.7rem;
       border-radius: 12px;
-      background: #f3f4ff;
+      background: #020617;
       font-size: 0.8rem;
       display: none;
-      border: 1px dashed #c7d2fe;
+      border: 1px dashed #1f2937;
     }
 
     .history.visible {
@@ -316,8 +323,8 @@
     }
 
     .history ul {
-      padding-left: 1.1rem;
-      margin: 0.25rem 0 0;
+      padding-left: 1.2rem;
+      margin: 0.3rem 0 0;
     }
 
     .history li {
@@ -326,11 +333,11 @@
 
     .empty-text {
       font-size: 0.85rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .obra-details {
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
       display: none;
     }
 
@@ -338,180 +345,142 @@
       display: block;
     }
 
-    .card-obra {
-      border-left-width: 6px;
-    }
-
-    .title-box {
-      padding: 0.6rem 0.85rem;
-      border-radius: 14px;
-      background: #f9fafb;
-    }
-
-    .title-box .card-header-title {
-      margin-bottom: 0.15rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .obra-header-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      align-items: flex-end;
-      font-size: 0.82rem;
-    }
-
     #obraMap {
       height: 260px;
       border-radius: 14px;
-      margin-top: 0.45rem;
-      border: 1px solid #d1d5db;
+      margin-top: 0.5rem;
+      border: 1px solid #1f2937;
       overflow: hidden;
     }
 
-    /* 📱 Mejora fuerte para móvil / tablet */
+    /* 🔹 Estilos RESPONSIVE para móvil / tablet */
     @media (max-width: 900px) {
       body {
         padding: 0.75rem;
       }
 
-      .app-shell {
-        max-width: 100%;
-      }
-
-      .layout-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      header.app-header h1 {
+      h1 {
         font-size: 1.6rem;
-      }
-
-      header.app-header p {
-        font-size: 0.9rem;
+        margin-bottom: 1rem;
       }
 
       .card {
-        padding: 0.9rem 0.9rem 1.1rem;
-        border-radius: 16px;
+        border-radius: 18px;
+        padding: 0.9rem 1rem;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9);
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .obra-header-right {
+        align-items: flex-start;
       }
 
       .form-row {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
       }
 
-      input[type="text"],
-      select {
-        font-size: 1rem;
+      input[type="text"] {
         padding: 0.7rem 0.85rem;
+        font-size: 1rem;
+      }
+
+      select {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.95rem;
       }
 
       button {
-        font-size: 0.95rem;
-        padding: 0.65rem 1rem;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
       }
 
       .worker-main {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
       }
 
       .worker-actions {
-        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
         justify-content: flex-start;
-        flex-wrap: wrap;
       }
 
       .worker-actions button {
-        flex: 1 1 45%;
-        min-width: 140px;
-      }
-
-      #obraMap {
-        height: 230px;
+        width: 100%;
+        justify-content: center;
       }
     }
 
-    @media (max-width: 600px) {
-      header.app-header h1 {
+    @media (max-width: 500px) {
+      body {
+        padding: 0.5rem;
+      }
+
+      h1 {
         font-size: 1.45rem;
       }
-      button.primary {
-        width: 100%;
+
+      .card {
+        border-radius: 0.75rem;
+        padding: 0.8rem 0.85rem;
+      }
+
+      #obraMap {
+        height: 220px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="app-header">
-      <h1>
-        <span class="logo-badge">BRB</span>
-        Fichaje de obras
-      </h1>
-      <p>Gestiona obras y fichajes de trabajadores desde móvil, tablet o PC.</p>
-    </header>
+  <div class="layout">
+    <h1>Fichaje de obras – BRB Construcciones</h1>
 
-    <div class="layout-grid">
-      <!-- Columna izquierda: nueva obra -->
-      <section class="card">
-        <div class="card-title">
-          <h2>Nueva obra</h2>
-          <span>Alta rápida de obra</span>
-        </div>
-
-        <div class="form-row">
-          <div>
-            <label for="obraTitulo">Título de la obra</label>
-            <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
-          </div>
-          <div>
-            <label for="obraLugar">Lugar (descripción)</label>
-            <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
-          </div>
-        </div>
-
-        <div class="obra-meta">
-          <span class="chip">BRB Construcciones</span>
-          <div style="min-width: 140px;">
-            <label for="obraTipoEmpresa">Tipo de empresa</label>
-            <select id="obraTipoEmpresa">
-              <option value="SL">SL</option>
-              <option value="Autónomo">Autónomo</option>
-            </select>
-          </div>
-        </div>
-
+    <!-- Formulario para añadir obra -->
+    <div class="card">
+      <h2>Nueva obra</h2>
+      <div class="form-row">
         <div>
-          <label>Ubicación en mapa (opcional)</label>
-          <div id="obraMap"></div>
-          <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
-            Toca el mapa para guardar coordenadas de la obra.
-          </p>
+          <label for="obraTitulo">Título de la obra</label>
+          <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
         </div>
+        <div>
+          <label for="obraLugar">Lugar (descripción)</label>
+          <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
+        </div>
+      </div>
 
-        <button id="btnAddObra" class="primary">Añadir obra</button>
-        <p id="obraError" class="small-text" style="color:#ef4444; margin-top:0.5rem; display:none;">
-          Rellena al menos el título y el lugar.
+      <div class="obra-meta" style="margin-bottom:0.75rem;">
+        <span class="chip empresa-chip">Empresa: BRB Construcciones</span>
+        <div>
+          <label for="obraTipoEmpresa">Tipo de empresa</label>
+          <select id="obraTipoEmpresa">
+            <option value="SL">SL</option>
+            <option value="Autónomo">Autónomo</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:0.75rem;">
+        <label>Selecciona la ubicación en el mapa (opcional)</label>
+        <div id="obraMap"></div>
+        <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
+          Sin coordenadas seleccionadas.
         </p>
-      </section>
+      </div>
 
-      <!-- Columna derecha: listado de obras -->
-      <section class="card">
-        <div class="card-title">
-          <h2>Obras y trabajadores</h2>
-          <span>Gestiona fichajes y exporta historiales</span>
-        </div>
-        <div id="obrasContainer"></div>
-      </section>
+      <button id="btnAddObra" class="primary" style="margin-top:0.9rem;">Añadir obra</button>
+      <p id="obraError" class="small-text" style="color:#f97373; margin-top:0.5rem; display:none;">
+        Rellena al menos el título y el lugar.
+      </p>
     </div>
+
+    <!-- Listado de obras -->
+    <div id="obrasContainer"></div>
   </div>
 
   <!-- Leaflet JS para el mapa -->
@@ -519,6 +488,7 @@
 
   <!-- APP + FIREBASE en un script tipo módulo -->
   <script type="module">
+    // Firebase modular desde CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
     import {
       getFirestore,
@@ -527,6 +497,7 @@
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
+    // 🔥 Config de TU proyecto
     const firebaseConfig = {
       apiKey: "AIzaSyBCoaW8FFNghoXmCuoyZJSHWLEFN5mlJJU",
       authDomain: "fichaje-brb-c9385.firebaseapp.com",
@@ -538,17 +509,17 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const dataDocRef = doc(db, "app", "data"); // Documento único
+    const dataDocRef = doc(db, "app", "data"); // DOC ÚNICO
 
     const state = { obras: [] };
 
     const obraColors = [
       "#22c55e",
-      "#3b82f6",
-      "#6366f1",
+      "#38bdf8",
+      "#a855f7",
+      "#facc15",
       "#f97316",
-      "#ec4899",
-      "#0ea5e9"
+      "#ec4899"
     ];
 
     let obraMap = null;
@@ -637,7 +608,7 @@
           obraMap.removeLayer(obraMarker);
           obraMarker = null;
         }
-        coordsText.textContent = "Toca el mapa para guardar coordenadas de la obra.";
+        coordsText.textContent = "Sin coordenadas seleccionadas.";
       });
     }
 
@@ -655,7 +626,7 @@
 
       state.obras.forEach((obra, index) => {
         const card = document.createElement("div");
-        card.className = "card card-obra";
+        card.className = "card";
 
         const color = obraColors[index % obraColors.length];
         card.style.borderLeftColor = color;
@@ -665,8 +636,7 @@
 
         const titleBox = document.createElement("div");
         titleBox.className = "title-box";
-        titleBox.style.backgroundColor = color + "15";
-        titleBox.style.borderColor = color + "55";
+        titleBox.style.borderColor = color;
 
         const title = document.createElement("div");
         title.className = "card-header-title";
@@ -700,7 +670,7 @@
           obra.empresaTipo;
 
         const deleteObraBtn = document.createElement("button");
-        deleteObraBtn.className = "danger";
+        deleteObraBtn.className = "secondary danger";
         deleteObraBtn.textContent = "Eliminar obra";
 
         deleteObraBtn.addEventListener("click", async () => {
@@ -769,7 +739,7 @@
 
         const errorTrab = document.createElement("p");
         errorTrab.className = "small-text";
-        errorTrab.style.color = "#ef4444";
+        errorTrab.style.color = "#f97373";
         errorTrab.style.display = "none";
         errorTrab.style.marginTop = "0.3rem";
         errorTrab.textContent =
@@ -879,7 +849,7 @@
       historyToggle.textContent = "Ver historial";
 
       const deleteWorkerBtn = document.createElement("button");
-      deleteWorkerBtn.className = "danger";
+      deleteWorkerBtn.className = "secondary danger";
       deleteWorkerBtn.textContent = "Eliminar trabajador";
 
       actions.appendChild(ficharBtn);
