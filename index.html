@@ -4,12 +4,9 @@
   <meta charset="UTF-8" />
   <title>Fichaje Obras – BRB Construcciones</title>
 
-  <!-- Vista correcta en móvil / tablet -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <!-- Manifest PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#16a34a" />
+  <meta name="theme-color" content="#007aff" />
 
   <!-- Leaflet CSS para el mapa -->
   <link
@@ -19,47 +16,25 @@
   />
 
   <style>
-    :root {
-      --bg-body: #0f172a;
-      --bg-gradient: radial-gradient(circle at top, #1e293b 0, #020617 55%);
-      --card-bg: #0b1120;
-      --card-border: #1e293b;
-      --accent: #16a34a; /* verde principal */
-      --accent-soft: rgba(22, 163, 74, 0.15);
-      --accent-strong: #15803d;
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --chip-bg: #111827;
-      --danger-bg: #7f1d1d;
-      --danger-soft: #fef2f2;
-      --danger-text: #fecaca;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       padding: 1.5rem;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg-body);
-      background-image: var(--bg-gradient);
-      color: var(--text-main);
+      background: #f5f5f7;
+      color: #222;
     }
 
     h1 {
       margin-top: 0;
-      margin-bottom: 1.25rem;
-      font-size: 2rem;
-      text-align: center;
-      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
     }
 
     h2 {
       margin-top: 0;
       font-size: 1.2rem;
-      margin-bottom: 0.75rem;
     }
 
     .layout {
@@ -68,12 +43,12 @@
     }
 
     .card {
-      background: linear-gradient(145deg, #020617, #020617, #020617, #020617);
-      border-radius: 20px;
-      padding: 1.1rem 1.3rem;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
-      border: 1px solid var(--card-border);
+      background: #fff;
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border: 1px solid #e5e5ea;
       border-left-width: 6px;
     }
 
@@ -82,7 +57,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 0.75rem;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.25rem;
     }
 
     .card-header-title {
@@ -91,24 +66,22 @@
     }
 
     .title-box {
-      padding: 0.6rem 0.9rem;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.85);
+      padding: 0.5rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #f5f5f7;
       min-width: 0;
       cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
     .title-box:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.75);
-      border-color: rgba(148, 163, 184, 1);
-      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .title-box .small-text {
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
     }
 
     .obra-header-right {
@@ -121,140 +94,98 @@
 
     .small-text {
       font-size: 0.85rem;
-      color: var(--text-muted);
+      color: #666;
     }
 
     label {
       font-size: 0.85rem;
       display: block;
-      margin-bottom: 0.25rem;
-      color: var(--text-muted);
+      margin-bottom: 0.2rem;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 0.55rem 0.7rem;
-      border-radius: 12px;
-      border: 1px solid #1f2937;
-      font-size: 0.95rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 10px;
+      border: 1px solid #d1d1d6;
+      font-size: 0.9rem;
       outline: none;
-      background: #020617;
-      color: var(--text-main);
-    }
-
-    input[type="text"]::placeholder {
-      color: #6b7280;
     }
 
     input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent-soft);
-      background: #020617;
+      border-color: #007aff;
+      box-shadow: 0 0 0 2px rgba(0,122,255,0.15);
     }
 
     select {
-      padding: 0.5rem 0.75rem;
+      padding: 0.4rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid #1f2937;
+      border: 1px solid #d1d1d6;
       font-size: 0.9rem;
-      background: #020617;
-      color: var(--text-main);
+      background: #f9f9ff;
       cursor: pointer;
     }
 
     button {
-      padding: 0.55rem 1rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
       border: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 0.3rem;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease, filter 0.08s ease;
-      white-space: nowrap;
     }
 
-    button.primary {
-      background: var(--accent);
-      color: #ecfdf5;
+    button.primary { background: #007aff; color: #fff; }
+    button.secondary { background: #e5e5ea; color: #222; }
+    button.danger { background: #ffebee; color: #b71c1c; }
+
+    /* Botón FICHAR: naranja por defecto, verde mientras se pulsa */
+    button.fichar-btn {
+      background: #ff9500; /* naranja */
+      color: #fff;
+      padding: 0.5rem 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      box-shadow: 0 10px 25px rgba(22, 163, 74, 0.55);
     }
-
-    button.primary:hover {
-      background: var(--accent-strong);
-      box-shadow: 0 12px 32px rgba(22, 163, 74, 0.65);
-    }
-
-    button.primary:active {
-      transform: scale(0.97);
-      filter: brightness(0.95);
-      box-shadow: 0 7px 18px rgba(22, 163, 74, 0.6);
-    }
-
-    button.secondary {
-      background: #020617;
-      color: var(--text-main);
-      border: 1px solid #1f2937;
-    }
-
-    button.secondary:hover {
-      background: #020617;
-      border-color: #374151;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.6);
-    }
-
-    button.secondary:active {
-      transform: scale(0.97);
-      filter: brightness(0.96);
-    }
-
-    button.danger {
-      background: #111827;
-      color: var(--danger-text);
-      border-color: #7f1d1d;
+    button.fichar-btn:active {
+      background: #34c759; /* verde al pulsar */
     }
 
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      box-shadow: none;
     }
 
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.9rem;
-      margin-bottom: 0.9rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
     .obra-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.5rem;
       align-items: center;
       font-size: 0.85rem;
     }
 
     .chip {
-      padding: 0.25rem 0.7rem;
+      padding: 0.2rem 0.6rem;
       border-radius: 999px;
-      background: var(--chip-bg);
+      background: #f2f2f7;
       font-size: 0.8rem;
-      border: 1px solid #1f2937;
     }
 
-    .empresa-chip {
-      font-weight: 500;
-      color: #e5e7eb;
-    }
+    .empresa-chip { font-weight: 500; }
 
     .workers-list {
-      margin-top: 0.6rem;
-      border-top: 1px dashed #1f2937;
-      padding-top: 0.6rem;
+      margin-top: 0.5rem;
+      border-top: 1px dashed #e5e5ea;
+      padding-top: 0.5rem;
     }
 
     .worker-item {
@@ -262,13 +193,13 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
-      border-bottom: 1px dashed #111827;
+      border-bottom: 1px dashed #f0f0f5;
     }
 
     .worker-main {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.5rem;
       justify-content: space-between;
       align-items: center;
     }
@@ -280,13 +211,11 @@
       font-size: 0.9rem;
     }
 
-    .worker-name {
-      font-weight: 500;
-    }
+    .worker-name { font-weight: 500; }
 
     .worker-dni {
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: #666;
     }
 
     .worker-actions {
@@ -294,144 +223,90 @@
       flex-wrap: wrap;
       gap: 0.4rem;
       align-items: center;
-      justify-content: flex-end;
     }
 
     .check {
       font-size: 0.85rem;
       opacity: 0;
       transition: opacity 0.2s ease;
-      color: #4ade80;
+      color: #28a745;
     }
 
-    .check.visible {
-      opacity: 1;
-    }
+    .check.visible { opacity: 1; }
 
     .history {
       margin-top: 0.3rem;
-      padding: 0.45rem 0.7rem;
-      border-radius: 12px;
-      background: #020617;
+      padding: 0.4rem 0.6rem;
+      border-radius: 10px;
+      background: #f9f9fb;
       font-size: 0.8rem;
       display: none;
-      border: 1px dashed #1f2937;
     }
 
-    .history.visible {
-      display: block;
-    }
+    .history.visible { display: block; }
 
     .history ul {
       padding-left: 1.2rem;
       margin: 0.3rem 0 0;
     }
 
-    .history li {
-      margin-bottom: 0.15rem;
-    }
+    .history li { margin-bottom: 0.15rem; }
 
     .empty-text {
       font-size: 0.85rem;
-      color: #6b7280;
+      color: #999;
     }
 
     .obra-details {
-      margin-top: 0.6rem;
+      margin-top: 0.5rem;
       display: none;
     }
 
-    .obra-details.visible {
-      display: block;
-    }
+    .obra-details.visible { display: block; }
 
     #obraMap {
       height: 260px;
-      border-radius: 14px;
+      border-radius: 12px;
       margin-top: 0.5rem;
-      border: 1px solid #1f2937;
+      border: 1px solid #ddd;
       overflow: hidden;
     }
 
-    /* 🔹 Estilos RESPONSIVE para móvil / tablet */
-    @media (max-width: 900px) {
+    /* Contenedor de lugar + botón buscar en mapa */
+    .lugar-with-button {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .lugar-button-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
       body {
-        padding: 0.75rem;
+        padding: 1rem;
       }
-
-      h1 {
-        font-size: 1.6rem;
-        margin-bottom: 1rem;
-      }
-
-      .card {
-        border-radius: 18px;
-        padding: 0.9rem 1rem;
-        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9);
-      }
-
       .card-header {
         flex-direction: column;
         align-items: stretch;
       }
-
       .obra-header-right {
         align-items: flex-start;
       }
-
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-      }
-
       input[type="text"] {
-        padding: 0.7rem 0.85rem;
         font-size: 1rem;
+        padding: 0.6rem 0.7rem;
       }
-
-      select {
-        padding: 0.6rem 0.9rem;
+      button {
         font-size: 0.95rem;
       }
-
-      button {
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-      }
-
-      .worker-main {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .worker-actions {
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-      }
-
-      .worker-actions button {
+      button.fichar-btn {
         width: 100%;
         justify-content: center;
-      }
-    }
-
-    @media (max-width: 500px) {
-      body {
-        padding: 0.5rem;
-      }
-
-      h1 {
-        font-size: 1.45rem;
-      }
-
-      .card {
-        border-radius: 0.75rem;
-        padding: 0.8rem 0.85rem;
-      }
-
-      #obraMap {
-        height: 220px;
       }
     }
   </style>
@@ -448,9 +323,12 @@
           <label for="obraTitulo">Título de la obra</label>
           <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
         </div>
-        <div>
+        <div class="lugar-with-button">
           <label for="obraLugar">Lugar (descripción)</label>
-          <input type="text" id="obraLugar" placeholder="Las Palmas de Gran Canaria" />
+          <input type="text" id="obraLugar" placeholder="Calle Tal 3, Las Palmas de Gran Canaria" />
+          <div class="lugar-button-row">
+            <button id="btnBuscarLugar" class="secondary">Buscar en mapa</button>
+          </div>
         </div>
       </div>
 
@@ -473,8 +351,8 @@
         </p>
       </div>
 
-      <button id="btnAddObra" class="primary" style="margin-top:0.9rem;">Añadir obra</button>
-      <p id="obraError" class="small-text" style="color:#f97373; margin-top:0.5rem; display:none;">
+      <button id="btnAddObra" class="primary" style="margin-top:0.75rem;">Añadir obra</button>
+      <p id="obraError" class="small-text" style="color:#ff3b30; margin-top:0.5rem; display:none;">
         Rellena al menos el título y el lugar.
       </p>
     </div>
@@ -514,12 +392,12 @@
     const state = { obras: [] };
 
     const obraColors = [
-      "#22c55e",
-      "#38bdf8",
-      "#a855f7",
-      "#facc15",
-      "#f97316",
-      "#ec4899"
+      "#FFE4E6",
+      "#DBEAFE",
+      "#DCFCE7",
+      "#FEF9C3",
+      "#EDE9FE",
+      "#FCE7F3"
     ];
 
     let obraMap = null;
@@ -545,9 +423,8 @@
         attribution: "&copy; OpenStreetMap"
       }).addTo(obraMap);
 
-      const coordsText = document.getElementById("obraCoordsText");
-
       obraMap.on("click", (e) => {
+        const coordsText = document.getElementById("obraCoordsText");
         newObraCoords = e.latlng;
 
         if (obraMarker) {
@@ -571,6 +448,58 @@
       const addButton = document.getElementById("btnAddObra");
       const errorMsg = document.getElementById("obraError");
       const coordsText = document.getElementById("obraCoordsText");
+      const buscarLugarBtn = document.getElementById("btnBuscarLugar");
+
+      // Botón "Buscar en mapa" usando Nominatim
+      buscarLugarBtn.addEventListener("click", async () => {
+        const query = lugarInput.value.trim();
+        if (!query) {
+          alert("Escribe una dirección en el campo Lugar antes de buscar.");
+          return;
+        }
+        if (!obraMap) {
+          alert("El mapa aún no está listo.");
+          return;
+        }
+
+        try {
+          const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
+            encodeURIComponent(query);
+          const resp = await fetch(url, {
+            headers: {
+              "Accept": "application/json"
+            }
+          });
+          const data = await resp.json();
+
+          if (!Array.isArray(data) || data.length === 0) {
+            alert("No se ha encontrado esa dirección en el mapa.");
+            return;
+          }
+
+          const { lat, lon } = data[0];
+          const latNum = parseFloat(lat);
+          const lonNum = parseFloat(lon);
+
+          newObraCoords = { lat: latNum, lng: lonNum };
+
+          if (obraMarker) {
+            obraMarker.setLatLng(newObraCoords);
+          } else {
+            obraMarker = L.marker(newObraCoords).addTo(obraMap);
+          }
+
+          obraMap.setView(newObraCoords, 16);
+          coordsText.textContent =
+            "Coordenadas seleccionadas: " +
+            latNum.toFixed(5) +
+            ", " +
+            lonNum.toFixed(5);
+        } catch (err) {
+          console.error("Error buscando dirección:", err);
+          alert("Error buscando la dirección en el mapa.");
+        }
+      });
 
       addButton.addEventListener("click", async () => {
         const titulo = tituloInput.value.trim();
@@ -636,6 +565,7 @@
 
         const titleBox = document.createElement("div");
         titleBox.className = "title-box";
+        titleBox.style.backgroundColor = color + "33";
         titleBox.style.borderColor = color;
 
         const title = document.createElement("div");
@@ -739,7 +669,7 @@
 
         const errorTrab = document.createElement("p");
         errorTrab.className = "small-text";
-        errorTrab.style.color = "#f97373";
+        errorTrab.style.color = "#ff3b30";
         errorTrab.style.display = "none";
         errorTrab.style.marginTop = "0.3rem";
         errorTrab.textContent =
@@ -837,7 +767,7 @@
       actions.className = "worker-actions";
 
       const ficharBtn = document.createElement("button");
-      ficharBtn.className = "primary";
+      ficharBtn.className = "fichar-btn";  // naranja / verde
       ficharBtn.textContent = "Fichar";
 
       const exportBtn = document.createElement("button");
@@ -852,10 +782,15 @@
       deleteWorkerBtn.className = "secondary danger";
       deleteWorkerBtn.textContent = "Eliminar trabajador";
 
+      const check = document.createElement("span");
+      check.className = "check";
+      check.textContent = "✓ Fichado";
+
       actions.appendChild(ficharBtn);
       actions.appendChild(exportBtn);
       actions.appendChild(historyToggle);
       actions.appendChild(deleteWorkerBtn);
+      actions.appendChild(check);
 
       main.appendChild(info);
       main.appendChild(actions);
@@ -907,6 +842,7 @@
 
         await saveToCloud();
 
+        // Si el historial está visible, lo refrescamos
         if (history.classList.contains("visible")) {
           renderHistory();
         }
