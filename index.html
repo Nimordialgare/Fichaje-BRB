@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <title>Fichaje Obras – BRB Construcciones</title>
 
+  <!-- Muy importante para móvil -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Manifest PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#007aff" />
@@ -30,6 +33,7 @@
       margin-top: 0;
       margin-bottom: 1rem;
       font-size: 1.8rem;
+      text-align: center;
     }
 
     h2 {
@@ -98,17 +102,17 @@
     }
 
     label {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       display: block;
       margin-bottom: 0.2rem;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 0.45rem 0.6rem;
+      padding: 0.55rem 0.7rem;
       border-radius: 10px;
       border: 1px solid #d1d1d6;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       outline: none;
     }
 
@@ -118,7 +122,7 @@
     }
 
     select {
-      padding: 0.4rem 0.6rem;
+      padding: 0.5rem 0.7rem;
       border-radius: 999px;
       border: 1px solid #d1d1d6;
       font-size: 0.9rem;
@@ -127,40 +131,47 @@
     }
 
     button {
-      padding: 0.45rem 0.9rem;
+      padding: 0.55rem 1rem;
       border-radius: 999px;
       border: none;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.3rem;
+      transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.1s ease;
+    }
+
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     button.primary { background: #007aff; color: #fff; }
     button.secondary { background: #e5e5ea; color: #222; }
     button.danger { background: #ffebee; color: #b71c1c; }
 
-    /* Botón FICHAR: naranja por defecto, verde mientras se pulsa */
-    button.fichar-btn {
-      background: #ff9500; /* naranja */
-      color: #fff;
-      padding: 0.5rem 1.1rem;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    button.fichar-btn:active {
-      background: #34c759; /* verde al pulsar */
-    }
-
     button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
 
+    /* Botón FICHAR: naranja normal, verde mientras se pulsa */
+    .fichar-btn {
+      background: #ff9500; /* naranja */
+      color: #fff;
+      min-width: 120px;
+      font-weight: 600;
+    }
+
+    .fichar-btn.fichar-pressed {
+      background: #34c759; /* verde mientras se pulsa */
+    }
+
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 0.75rem;
       margin-bottom: 0.75rem;
     }
@@ -223,16 +234,8 @@
       flex-wrap: wrap;
       gap: 0.4rem;
       align-items: center;
+      justify-content: flex-end;
     }
-
-    .check {
-      font-size: 0.85rem;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      color: #28a745;
-    }
-
-    .check.visible { opacity: 1; }
 
     .history {
       margin-top: 0.3rem;
@@ -272,41 +275,53 @@
       overflow: hidden;
     }
 
-    /* Contenedor de lugar + botón buscar en mapa */
-    .lugar-with-button {
+    .map-actions {
+      margin-top: 0.4rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .lugar-button-row {
-      display: flex;
-      gap: 0.4rem;
       flex-wrap: wrap;
-      align-items: center;
+      gap: 0.5rem;
     }
 
-    @media (max-width: 640px) {
+    .map-actions button {
+      flex: 1 1 160px;
+    }
+
+    @media (max-width: 768px) {
       body {
-        padding: 1rem;
+        padding: 0.75rem;
       }
-      .card-header {
+
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .card {
+        padding: 0.9rem 0.9rem;
+      }
+
+      input[type="text"],
+      select {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+      }
+
+      button {
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .worker-main {
         flex-direction: column;
-        align-items: stretch;
-      }
-      .obra-header-right {
         align-items: flex-start;
       }
-      input[type="text"] {
-        font-size: 1rem;
-        padding: 0.6rem 0.7rem;
-      }
-      button {
-        font-size: 0.95rem;
-      }
-      button.fichar-btn {
+
+      .worker-actions {
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
+      }
+
+      #obraMap {
+        height: 230px;
       }
     }
   </style>
@@ -323,12 +338,9 @@
           <label for="obraTitulo">Título de la obra</label>
           <input type="text" id="obraTitulo" placeholder="Reforma edificio Calle Mayor 12" />
         </div>
-        <div class="lugar-with-button">
+        <div>
           <label for="obraLugar">Lugar (descripción)</label>
-          <input type="text" id="obraLugar" placeholder="Calle Tal 3, Las Palmas de Gran Canaria" />
-          <div class="lugar-button-row">
-            <button id="btnBuscarLugar" class="secondary">Buscar en mapa</button>
-          </div>
+          <input type="text" id="obraLugar" placeholder="Calle Tal 5, Las Palmas..." />
         </div>
       </div>
 
@@ -344,11 +356,16 @@
       </div>
 
       <div style="margin-top:0.75rem;">
-        <label>Selecciona la ubicación en el mapa (opcional)</label>
+        <label>Ubicación en el mapa</label>
         <div id="obraMap"></div>
         <p id="obraCoordsText" class="small-text" style="margin-top:0.3rem;">
           Sin coordenadas seleccionadas.
         </p>
+        <div class="map-actions">
+          <button id="btnBuscarMapa" class="secondary">
+            Buscar en mapa por "Lugar"
+          </button>
+        </div>
       </div>
 
       <button id="btnAddObra" class="primary" style="margin-top:0.75rem;">Añadir obra</button>
@@ -412,6 +429,7 @@
       await setDoc(dataDocRef, { obras: state.obras });
     }
 
+    // 🌍 Inicializar mapa
     function setupMap() {
       const mapContainer = document.getElementById("obraMap");
       if (!mapContainer) return;
@@ -423,8 +441,10 @@
         attribution: "&copy; OpenStreetMap"
       }).addTo(obraMap);
 
+      const coordsText = document.getElementById("obraCoordsText");
+
+      // Selección haciendo clic en el mapa
       obraMap.on("click", (e) => {
-        const coordsText = document.getElementById("obraCoordsText");
         newObraCoords = e.latlng;
 
         if (obraMarker) {
@@ -439,48 +459,37 @@
           ", " +
           e.latlng.lng.toFixed(5);
       });
-    }
 
-    function setupAddObraForm() {
-      const tituloInput = document.getElementById("obraTitulo");
+      // Botón "Buscar en mapa por Lugar"
+      const btnBuscar = document.getElementById("btnBuscarMapa");
       const lugarInput = document.getElementById("obraLugar");
-      const tipoSelect = document.getElementById("obraTipoEmpresa");
-      const addButton = document.getElementById("btnAddObra");
-      const errorMsg = document.getElementById("obraError");
-      const coordsText = document.getElementById("obraCoordsText");
-      const buscarLugarBtn = document.getElementById("btnBuscarLugar");
 
-      // Botón "Buscar en mapa" usando Nominatim
-      buscarLugarBtn.addEventListener("click", async () => {
-        const query = lugarInput.value.trim();
-        if (!query) {
-          alert("Escribe una dirección en el campo Lugar antes de buscar.");
-          return;
-        }
-        if (!obraMap) {
-          alert("El mapa aún no está listo.");
+      btnBuscar.addEventListener("click", async () => {
+        const texto = lugarInput.value.trim();
+        if (!texto) {
+          alert("Escribe primero una dirección en 'Lugar'.");
           return;
         }
 
         try {
           const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
-            encodeURIComponent(query);
+            encodeURIComponent(texto);
           const resp = await fetch(url, {
             headers: {
               "Accept": "application/json"
             }
           });
           const data = await resp.json();
-
-          if (!Array.isArray(data) || data.length === 0) {
-            alert("No se ha encontrado esa dirección en el mapa.");
+          if (!data || data.length === 0) {
+            alert("No se encontró esa dirección en el mapa.");
             return;
           }
-
           const { lat, lon } = data[0];
           const latNum = parseFloat(lat);
           const lonNum = parseFloat(lon);
 
+          // Centrar mapa y colocar marcador
+          obraMap.setView([latNum, lonNum], 17);
           newObraCoords = { lat: latNum, lng: lonNum };
 
           if (obraMarker) {
@@ -489,7 +498,6 @@
             obraMarker = L.marker(newObraCoords).addTo(obraMap);
           }
 
-          obraMap.setView(newObraCoords, 16);
           coordsText.textContent =
             "Coordenadas seleccionadas: " +
             latNum.toFixed(5) +
@@ -500,6 +508,16 @@
           alert("Error buscando la dirección en el mapa.");
         }
       });
+    }
+
+    // Formulario de nueva obra
+    function setupAddObraForm() {
+      const tituloInput = document.getElementById("obraTitulo");
+      const lugarInput = document.getElementById("obraLugar");
+      const tipoSelect = document.getElementById("obraTipoEmpresa");
+      const addButton = document.getElementById("btnAddObra");
+      const errorMsg = document.getElementById("obraError");
+      const coordsText = document.getElementById("obraCoordsText");
 
       addButton.addEventListener("click", async () => {
         const titulo = tituloInput.value.trim();
@@ -767,7 +785,7 @@
       actions.className = "worker-actions";
 
       const ficharBtn = document.createElement("button");
-      ficharBtn.className = "fichar-btn";  // naranja / verde
+      ficharBtn.className = "fichar-btn";
       ficharBtn.textContent = "Fichar";
 
       const exportBtn = document.createElement("button");
@@ -782,15 +800,10 @@
       deleteWorkerBtn.className = "secondary danger";
       deleteWorkerBtn.textContent = "Eliminar trabajador";
 
-      const check = document.createElement("span");
-      check.className = "check";
-      check.textContent = "✓ Fichado";
-
       actions.appendChild(ficharBtn);
       actions.appendChild(exportBtn);
       actions.appendChild(historyToggle);
       actions.appendChild(deleteWorkerBtn);
-      actions.appendChild(check);
 
       main.appendChild(info);
       main.appendChild(actions);
@@ -833,6 +846,21 @@
 
       renderHistory();
 
+      // FICHAR: naranja -> verde mientras se pulsa
+      function setPressed(pressed) {
+        if (pressed) {
+          ficharBtn.classList.add("fichar-pressed");
+        } else {
+          ficharBtn.classList.remove("fichar-pressed");
+        }
+      }
+
+      ficharBtn.addEventListener("mousedown", () => setPressed(true));
+      ficharBtn.addEventListener("mouseup", () => setPressed(false));
+      ficharBtn.addEventListener("mouseleave", () => setPressed(false));
+      ficharBtn.addEventListener("touchstart", () => setPressed(true), { passive: true });
+      ficharBtn.addEventListener("touchend", () => setPressed(false));
+
       ficharBtn.addEventListener("click", async () => {
         const now = Date.now();
         if (!Array.isArray(trabajador.fichajes)) {
@@ -842,7 +870,6 @@
 
         await saveToCloud();
 
-        // Si el historial está visible, lo refrescamos
         if (history.classList.contains("visible")) {
           renderHistory();
         }
